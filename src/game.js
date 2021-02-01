@@ -18,13 +18,15 @@ var gameTopMarginPx, gameBottomMarginPx, gameLeftMarginPx, gameRightMarginPx, ga
 
 var playerCoin;
 let firstColor = colors.Red;
-var previousColor;
+var previousColor, color;
 
 var leftBtn, rightBtn, shootBtn, playerCoinCol;
 
 const ARROW_RIGHT = "ArrowRight";
 const ARROW_LEFT = "ArrowLeft";
 const ENTER_KEY = "Enter";
+
+var tray1,tray2;
 
 //styling canvas with color and position
 function canvasStyling(){
@@ -79,12 +81,12 @@ function setupTextBoxes() {
 function coinTrays(){
     var coinTrayWidth = (gameBoardWidth/2) - 50;
     // let tray1 = new CoinTray(300,100,600,300,colors.Red, 3,7);
-    let tray1 = new CoinTray(gameLeftMarginPx,gameBoardHeight+gameTopMarginPx,coinTrayWidth,gameBottomMarginPx,colors.Red, 3,7);
+    tray1 = new CoinTray(gameLeftMarginPx,gameBoardHeight+gameTopMarginPx,coinTrayWidth,gameBottomMarginPx,colors.Red, 3,7);
     tray1.draw(ctx);
     tray1.fillAllCoins(ctx , colors.Red);
 
     // let tray2 = new CoinTray(300,100,600,300,colors.Red, 3,7);
-    let tray2 = new CoinTray((gameLeftMarginPx+gameBoardWidth) - coinTrayWidth ,gameBoardHeight+gameTopMarginPx,coinTrayWidth,gameBottomMarginPx,colors.Green, 3,7);
+    tray2 = new CoinTray((gameLeftMarginPx+gameBoardWidth) - coinTrayWidth ,gameBoardHeight+gameTopMarginPx,coinTrayWidth,gameBottomMarginPx,colors.Green, 3,7);
     tray2.draw(ctx);
     tray2.fillAllCoins(ctx , colors.Green);
 
@@ -95,6 +97,9 @@ function coinTrays(){
 ////////////////////// M A I N --- F U N C T I O N A L I T Y //////////////////////
 
 main(); // call the main functionality
+var tray1InitLength = tray1.coins.length;
+var tray2InitLength = tray2.coins.length;
+
 
 function main() {
 
@@ -169,22 +174,31 @@ function rightBtnClicked(){
 
 function createNewPlayerCoin() {
 
+        
+    msg(tray1InitLength);
+    msg(tray2InitLength);
+
     playerCoinCol = 4;
     playerCoin = {}; //nullifying the object
 
 
-    var color;
+    // var color;
 
     if (typeof previousColor == 'undefined') {
         color = firstColor;
     }
     else if(previousColor == colors.Red){
         color = colors.Green;
+        tray1.coins.pop();
+        msg("New Tray 1 length is " + tray1.coins.length);
     }
 
     else{
         color = colors.Red;
+        tray2.coins.pop();
+        msg("New Tray 2 length is " + tray2.coins.length);
     }
+    
 
     previousColor = color;
 
@@ -195,21 +209,23 @@ function createNewPlayerCoin() {
     playerCoin = new Coin(playerCoinInitX,playerCoinInitY,20,color);
 
     playerCoin.draw(ctx);
+
 }
 
 function shootBtnClicked(){
     
-    if (gameBoard.dropCoin(playerCoin, /*coin2,*/ ctx, playerCoinCol)) {
+
+    if (gameBoard.dropCoin(playerCoin, ctx, playerCoinCol)) {
         enableButtons();
         createNewPlayerCoin();
     }
     else {
         errorAlert("Try Another Column");
     }
-    
 }
 
 function disableButton(btn) {
+    playErrorTone();
     btn.disabled = true;
 }
 
@@ -256,4 +272,37 @@ function errorAlert(msg) {
 
 function showErrorMessage(msg) {} // doing nothing for now
 
-function playErrorTone() {} // doing nothing for now
+function playErrorTone() {
+    errorSound.play();
+} // doing nothing for now
+
+
+function sound(src) {
+
+    this.sound = document.createElement("audio");
+
+    this.sound.src = src;
+
+    this.sound.setAttribute("preload", "auto");
+
+    this.sound.setAttribute("controls", "none");
+
+    this.sound.style.display = "none";
+
+    document.body.appendChild(this.sound);
+
+    this.play = function(){
+
+        this.sound.play();
+
+    }
+
+    this.stop = function(){
+
+        this.sound.pause();
+
+    }    
+
+}
+
+var errorSound = new sound("errorSound.mp3");
