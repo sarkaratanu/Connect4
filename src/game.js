@@ -31,6 +31,9 @@ var tray1,tray2;
 //styling canvas with color and position
 function canvasStyling(){
 
+    ctx.canvas.width  = window.innerWidth * 0.75;
+    ctx.canvas.height = window.innerHeight * 0.85;
+
     canvas.style.background = '#000000';
 
 }
@@ -43,11 +46,11 @@ function gameBoardResizing() {
 
     //calculate the new margins and sizes
 
-    gameTopMarginPx = canvas.height * gameTopMarginPct / 100;
+    gameTopMarginPx = ctx.canvas.height * gameTopMarginPct / 100;
     // gameTopMarginPx = canvas.height/8;
-    gameLeftMarginPx = canvas.width * gameLeftMarginPct / 100;
+    gameLeftMarginPx = ctx.canvas.width * gameLeftMarginPct / 100;
     gameRightMarginPx = gameLeftMarginPx;
-    gameBottomMarginPx = canvas.height * gameBottomMarginPct / 100;
+    gameBottomMarginPx = ctx.canvas.height * gameBottomMarginPct / 100;
 
     // msg(gameTopMarginPx + "--" + gameBottomMarginPx + "--" + gameLeftMarginPx + "--" + gameRightMarginPx);
 
@@ -82,6 +85,7 @@ function coinTrays(){
     var coinTrayWidth = (gameBoardWidth/2) - 50;
     // let tray1 = new CoinTray(300,100,600,300,colors.Red, 3,7);
     tray1 = new CoinTray(gameLeftMarginPx,gameBoardHeight+gameTopMarginPx,coinTrayWidth,gameBottomMarginPx,colors.Red, 3,7);
+    // tray1 = new CoinTray(gameLeftMarginPx, gameTopMarginPx+gameBoardHeight,coinTrayWidth,gameBottomMarginPx,colors.Red,6,7);
     tray1.draw(ctx);
     tray1.fillAllCoins(ctx , colors.Red);
 
@@ -306,3 +310,4 @@ function sound(src) {
 }
 
 var errorSound = new sound("errorSound.mp3");
+console.log(window.screen.width);
