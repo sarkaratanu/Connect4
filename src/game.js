@@ -209,8 +209,6 @@ function createNewPlayerCoin() {
 
 function shootBtnClicked(){
 
-
-
     if (gameBoard.drop(playerCoin, ctx, playerCoinCol)) {
         enableButtons();
         createNewPlayerCoin();
@@ -324,6 +322,13 @@ function hideYouWonMessage() {
 function closeYouWonMessage() {
     hideYouWonMessage();
 }
+
+
+
+
+
+
+
 
 function showColErrorMesage(){
     colErrorMessage = document.getElementById("colErrorMessage");
