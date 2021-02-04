@@ -1,15 +1,21 @@
 import { colors } from './Globals.js';
 import { Coin } from './Coin.js';
+import { Slot } from './Slot.js';
 export class GameBoard {
 
-    constructor() {
+    constructor(ctx) {
 
         this.MAX_ROWS = 6;
         this.MAX_COLS = 7;
         this.pad;
 
-        this.slotCounters = new Array(this.MAX_COLS);
+        this.firstTime = true;
+        
 
+        this.slotCounters = new Array(this.MAX_COLS);
+        this.columns = new Array(this.MAX_COLS);
+
+        
 
 
         for(var i= 0; i<this.slotCounters.length; i++){
@@ -22,7 +28,7 @@ export class GameBoard {
     calculateSlotDimensions() {
 
         this.sqSize = this.height / this.MAX_ROWS;
-        this.pad = (this.width - (this.MAX_COLS * this.sqSize))/2;
+        this.pad = (this.width - (this.MAX_COLS * this.sqSize))/2; // 
         // console.log(this.pad);
     }
     resize(ctx, width, height, top, left) {
@@ -40,69 +46,163 @@ export class GameBoard {
         this.distBetweenRows = this.height/this.MAX_ROWS;
 
 
-        this.draw(ctx);
+        // this.draw(ctx);
+
+        if (this.firstTime) {
+            // console.log("entered if");
+            this.createSlotsFirstTime(ctx);
+            this.firstTime = false;
+            // console.log(this.firstTime);
+        }
+        else {
+            // console.log("entered else");
+            this.resizeSlots();
+        }
+
+        
+
     }
+
+    createSlotsFirstTime(ctx) {
+
+        
+        
+        for(var col=0; col < this.MAX_COLS; col++){
+        
+            var slotLeft = this.left + this.pad + (this.sqSize * col);
+        
+            this.columns[col] = new Array(this.MAX_ROWS);
+
+            for(var row=0; row < this.MAX_ROWS; row++){
+
+                var slotTop = this.top + (this.sqSize * row);
+        
+                this.columns[col][row] = new Slot(slotTop,slotLeft,this.sqSize,'#000000');
+        
+        
+                this.columns[col][row].draw(ctx);
+        
+
+            }
+        }
+
+        // console.log("Create Slots " + this.columns);
+    
+    }
+    resizeSlots() {}
 
     draw(ctx) {
 
-        this.drawGridLines(ctx)
+        // this.drawGridLines(ctx)
     }
 
 
-    drawGridLines(ctx) {
+    // drawGridLines(ctx) {
 
-        // this.drawGameBoardOutline(ctx , this.pad);
-        this.drawHorizontalLines(ctx , this.pad);
-        this.drawVerticalLines(ctx , this.pad);
+    //     // this.drawGameBoardOutline(ctx , this.pad);
+    //     this.drawHorizontalLines(ctx , this.pad);
+    //     this.drawVerticalLines(ctx , this.pad);
         
-    }
+    // }
     
     
-    drawGameBoardOutline(ctx) {
+    // drawGameBoardOutline(ctx) {
     
-        ctx.strokeStyle = colors.White;
+    //     ctx.strokeStyle = colors.White;
     
-        ctx.strokeRect(this.left, this.top, this.width, this.height);
+    //     ctx.strokeRect(this.left, this.top, this.width, this.height);
     
-    }
+    // }
     
-    drawVerticalLines(ctx , pad) {
+    // drawVerticalLines(ctx , pad) {
     
-        var lineX = this.left + this.pad;
+    //     var lineX = this.left + this.pad;
     
-        // draw vertical lines
-        for(var i = 0 ; i < this.MAX_COLS+1 ; i++){ 
+    //     // draw vertical lines
+    //     for(var i = 0 ; i < this.MAX_COLS+1 ; i++){ 
     
-            //line color and width
-            ctx.strokeStyle = "#fff";
-            ctx.lineWidth = 1;
+    //         //line color and width
+    //         ctx.strokeStyle = "#fff";
+    //         ctx.lineWidth = 1;
     
             
-            // y += 50;
-            ctx.beginPath();
-            ctx.moveTo(lineX , this.top);
-            ctx.lineTo(lineX , this.height + this.top);
-            ctx.stroke();
-            // console.log(x);
-            lineX += this.sqSize;
+    //         // y += 50;
+    //         ctx.beginPath();
+    //         ctx.moveTo(lineX , this.top);
+    //         ctx.lineTo(lineX , this.height + this.top);
+    //         ctx.stroke();
+    //         // console.log(x);
+    //         lineX += this.sqSize;
             
-        }
-    }
+    //     }
+    // }
     
-    dropCoin(coin,ctx,col){
+    // dropCoin(coin,ctx,col){
 
-        let i = col-1;
+    //     let i = col-1;
 
-        if(this.slotCounters[i] == 0){
-            return (false);
+    //     if(this.slotCounters[i] == 0){
+    //         return (false);
+    //     }
+    //     else {
+    //         coin.moveDown(ctx,this.slotCounters[i] * this.sqSize, colors.Black);
+    //         this.slotCounters[i]--;    
+    //         return (true);
+    //     }
+        
+        
+    // }
+
+    drop(coin,ctx,col){
+
+        col--; 
+
+        //given the column, start checking from the bottom slot 
+        //if bottom slot is full, check the slot above
+        //keep doing till an empty slot is found
+        //if all slots are full in that column, return false
+        //if empty slot is found, fill it with the given coin
+
+
+        // console.log("Shoot Column >>" + col);
+
+        if (false) {
+
+            console.log(this.columns[0][0]);
+            this.columns[3][3].drawFunky(ctx);
+
+            console.log(this.columns[3][3].isEmpty());
+
+
         }
         else {
-            coin.moveDown(ctx,this.slotCounters[i] * this.sqSize, colors.Black);
-            this.slotCounters[i]--;    
-            return (true);
+            
+            let column = this.columns[col];
+
+            var slotFound = false;
+            const backgroundColor = colors.Black;
+    
+            for(var row=this.MAX_ROWS-1; row>=0 &&  !slotFound; row--){
+                    
+                let slot=column[row];
+
+                if (slot.isEmpty()) {
+                    // fill this slot with the given coin
+                    slot.fill(ctx, coin, backgroundColor);
+                    slotFound = true;
+                }
+                else {
+                    // empty slot not found, check the one above in the for loop
+                }
+            }
+    
+            return (slotFound);
+            
         }
         
+
         
+
     }
 
 

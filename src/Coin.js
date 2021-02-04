@@ -62,6 +62,15 @@ export class Coin {
         this.draw(ctx);    
     }
 
+
+    reposition(ctx, newX, newY, backgroundColor) {
+        let moveByX = newX - this.x;
+        let moveByY = newY - this.y;
+
+        this.move(ctx, moveByX, moveByY, backgroundColor)
+    }
+
+
     erase(ctx,backgroundColor){
         this.drawFilledCircle(ctx,2, backgroundColor);
     }

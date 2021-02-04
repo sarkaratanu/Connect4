@@ -77,6 +77,8 @@ export class CoinTray {
 
     erase(ctx, x, y){
 
+        
+
 
 
         

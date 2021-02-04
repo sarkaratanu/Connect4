@@ -7,53 +7,87 @@
     <head>
         <!-- <title>Connect 4</title> -->
         <style>
-/* 
-            div.HEADER {
-                text-align: center;
+            body {font-family: Arial, Helvetica, sans-serif;}
+
+            .youWonMessage {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1; /* Sit on top */
+            padding-top: 0%; /* Location of the box */
+            left: 78.9%;
+            top: 61%;
+            width: 21.6%; /* Full width */
+            height: 25%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            /* background-color: rgb(0,0,0); Fallback color */
+            /* background-color: rgba(0,0,0,0.4); Black w/ opacity */
+            }
+
+            /* Modal Content */
+            .youWonMessage-content {
+            background-color: #fefefe;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            }
+
+            /* The Close Button */
+            .closeYouWonMessage {
+            color: #aaaaaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            }
+
+            .closeYouWonMessage:hover,
+            .closeYouWonMessage:focus {
+            color: #000;
+            text-decoration: none;
+            cursor: pointer;
             }
             
-            *{
-                margin: 0px;
-                padding: 0px;
+
+
+
+            .colErrorMessage {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1; /* Sit on top */
+            padding-top: 0%; /* Location of the box */
+            left: 78.9%;
+            top: 51.4%;
+            width: 21.6%; /* Full width */
+            height: 25%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            /* border-color: #000; */
+            /* background-color: rgb(0,0,0); Fallback color */
+            /* background-color: rgba(0,0,0,0.4); Black w/ opacity */
             }
 
-            div#container{
-
-            border: 5px solid yellow;
-            height: 700px;
-            width: 1920;
-            margin: 5px 25px;
-            background-color: darkgreen;
-
+            /* Modal Content */
+            .colErrorMessage-content {
+            background-color: #fefefe;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
             }
 
-            section#TitleBar{
-
-            background-color: gray;
-            height: 80px;
-
+            /* The Close Button */
+            .closeColErrorMessage {
+            color: #aaaaaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
             }
 
-            section#GameBar{
-
-            background-color: darkred;
-            height: 500px;
-            width: 500px;
-            float: left;
-            
+            .closeColErrorMessage:hover,
+            .closeColErrorMessage:focus {
+            color: #000;
+            text-decoration: none;
+            cursor: pointer;
             }
-
-            section#SideBar{
-            
-            background-color: lightgray;
-            height: 300px;
-            width: 500px;
-            float: left;
-            
-            }
-
-
-         */
             table, th, td {
             border: 1px solid black;
             }
@@ -73,14 +107,40 @@
 
     <body>
         
+        <!-- The Modal -->
+        <div id="youWonMessage" class="youWonMessage">
+
+            <!-- Modal content -->
+                <div id="youWonMessage-Content" class="youWonMessage-content">
+                    <span id="youWonMessageButton" class="closeYouWonMessage">&times;</span>
+                    <p>Congratulations, Player 1 has won</p>
+                </div>
+    
+            </div>
+    
+        
+        <!-- The Modal -->
+        <div id="colErrorMessage" class="colErrorMessage">
+
+            <!-- Modal content -->
+                <div id="colErrorMessage-Content" class="colErrorMessage-content">
+                    <span id="colErrorMessageButton" class="closeColErrorMessage">&times;</span>
+                    <p>Try another colum, this one's full</p>
+                </div>
+    
+            </div>
+        
+
+
+
         <!-- bordercolor="#010000"  -->
-        <table width=100%>
+        <table width=100% height="100%">
 
             <!-- row 1 -->
             <tr>
                 <td rowspan=3>
-                    <!-- <canvas id="gameScreen" name="gameScreen" width="1000" height="750px"></canvas> -->                    
-                    <canvas id="gameScreen" name="gameScreen"></canvas>                    
+                    <canvas id="gameScreen" name="gameScreen" width="1000" height="750px"></canvas>                    
+                    <!-- <canvas id="gameScreen" name="gameScreen"></canvas>                     -->
                     <!-- <canvas id="gameScreen" name="gameScreen" width="window.screen.width" height="750px"></canvas> -->
                     <!-- <canvas id="gameScreen" style="width:70%;height:60%;"></canvas> -->
 
@@ -92,6 +152,11 @@
 
                 <td>
                     <input type="text" id="player1Name" name="player1Name">
+                </td>
+                
+                <td>
+                    <h1>Errors/Messages Below</h1>
+                    <p1>Click "x" to close</p1>
                 </td>
 
 
@@ -107,6 +172,12 @@
                 <td>
                     <input type="text" id="player2Name" name="player2Name">
                 </td>
+
+                <td rowspan="2">
+                    
+                </td> 
+                
+                <!-- </td> -->
 
             </tr>
 
@@ -138,9 +209,18 @@
 
 
         </table>
+
+        <table>
+
+
+
+
+        </table>
         
 
-        <script type="module" src="./src/game.js"></script>
+        <script 
+            type="module" src="./src/game.js">
+        </script>
 
         
 
