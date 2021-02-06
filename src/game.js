@@ -4,6 +4,7 @@ import { colors } from './Globals.js';
 import { Coin } from './Coin.js';
 import { CoinTray } from './CoinTray.js';
 import { Slot } from './Slot.js';
+import { playWinnerTone, playErrorTone } from './Sounds.js';
 
 //canvas
 
@@ -273,42 +274,10 @@ function showErrorMessage(msg) {
     console.log(msg);
 } // doing nothing for now
 
-function playErrorTone() {
-    errorSound.play();
-} // doing nothing for now
-
-function sound(src) {
-
-    this.sound = document.createElement("audio");
-
-    this.sound.src = src;
-
-    this.sound.setAttribute("preload", "auto");
-
-    this.sound.setAttribute("controls", "none");
-
-    this.sound.style.display = "none";
-
-    document.body.appendChild(this.sound);
-
-    this.play = function(){
-
-        this.sound.play();
-
-    }
-
-    this.stop = function(){
-
-        this.sound.pause();
-
-    }    
-
-}
-
-var errorSound = new sound("errorSound.mp3");
-
 function showYouWonMessage(){
 
+    // winnerSound.play();
+    playWinnerTone();
     youWonMessage = document.getElementById("youWonMessage");
     youWonMessage.style.display = "block";    
 }
@@ -323,14 +292,8 @@ function closeYouWonMessage() {
     hideYouWonMessage();
 }
 
-
-
-
-
-
-
-
 function showColErrorMesage(){
+    playErrorTone();
     colErrorMessage = document.getElementById("colErrorMessage");
     colErrorMessage.style.display = "block";    
 }
@@ -366,4 +329,3 @@ function setupEventHandlers() {
 
 
 }
-console.log();
