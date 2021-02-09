@@ -7,7 +7,6 @@ import { Slot } from './Slot.js';
 import { playWinnerTone, playErrorTone } from './Sounds.js';
 
 //canvas
-
 let canvas=document.getElementById("gameScreen");
 let ctx=canvas.getContext("2d");
 
@@ -37,11 +36,15 @@ var popUpBox,popUpBoxMessage;
 
 var isKeyDisabled = false;
 
+var winner;
+
 const messages = {
 
-    colError : "Try another column, this one's already full"
-
-
+    deafult : " ----->>>>> Click " +  "'x'" + " to resume playing",
+    colError : "Try another column, this one's already full",
+    winner : "Congrats!" + winner + "has won",
+    tooFarLeft : "Can't go left anymore, there's no more space",
+    tooFarRight : "Can't go right anymore, there's no more space",
 
 }
 // let howToClosePopUp = 
@@ -181,31 +184,6 @@ function main() {
 
 }
 
-function rightBtnClicked(){
-
-    if(playerCoinCol == 7){
-        disableButton(rightBtn);
-    }
-    else{
-        enableButtons();
-        playerCoin.moveRight(ctx,gameBoard.sqSize,colors.Black);
-        playerCoinCol += 1;
-    }
-
-}
-function leftBtnClicked(){
-
-    if(playerCoinCol == 1){
-        disableButton(leftBtn);
-    }
-    else{
-        enableButtons();
-        playerCoin.moveLeft(ctx,gameBoard.sqSize,colors.Black);
-        playerCoinCol -= 1;
-    }
-
-}
-
 function createNewPlayerCoin() {
 
     // msg(tray1InitLength);
@@ -246,55 +224,13 @@ function createNewPlayerCoin() {
 
 }
 
-function shootBtnClicked(){
-
-    if (gameBoard.drop(playerCoin, ctx, playerCoinCol)) {
-        enableButtons();
-        createNewPlayerCoin();
-        // showColErrorMesage();
-        // showYouWonMessage();
-        // var player = "Abhinn";
-        // showpopUpBox("Congrats! " + player + " Won");
-
-    }
-    else {
-        // errorAlert("Try Another Column");
-        // showColErrorMesage();
-        // var testerLine = "Try another column, this one's full";
-        showpopUpBox(messages.colError);
-        // showYouWonMessage();
-    }
-}
-
-function disableButton(btn) {
-    playErrorTone();
-    btn.disabled = true;
-}
-
-function enableButton(btn) {
-    btn.disabled = false;
-}
-
-function enableButtons(){
-    leftBtn.disabled = false;
-    rightBtn.disabled = false;
-}
-
-function disableButtons(){
-    // console.log("entered disable buttons");
-    leftBtnClicked.disabled = true;
-    rightBtnClicked.disabled = true;
-    // console.log("exiting disable buttons");
-}
 
 //helps figure out which key has been pressed
 document.addEventListener("keydown",function(event) {
     onkeypressed(event);
 })
 
-function disableKeys(){
-    isKeyDisabled = true;
-}
+
 function onkeypressed(event) {
 
     if(!(isKeyDisabled)){
@@ -366,14 +302,15 @@ function showErrorMessage(msg) {
 // }
 
 function showpopUpBox(message){
-    disableKeys();
+    disableMoving();
+    // disableKeys();
     // isKeyDisabled = true;
-    disableButtons();
+    // disableButtons();
     // disableButton(leftBtn);
     // disableButton(rightBtn);
     popUpBox = document.getElementById("popUpBox");
     popUpBoxMessage = document.getElementById("popUpBoxMessage");
-    popUpBoxMessage.innerHTML=message;
+    popUpBoxMessage.innerHTML=message + messages.deafult;
     popUpBox.style.display = "block";    
 }
 
@@ -382,10 +319,109 @@ function closepopUpBox(){
     // isKeyDisabled = false;
     popUpBox = document.getElementById("popUpBox");
     popUpBox.style.display = "none";
-    enableKeys();
+    // enableKeys();
+    // enableButtons();
+    enableMoving();
+}
+
+
+function enableMoving(){
     enableButtons();
+    enableKeys();
+}
+
+function disableMoving(){
+    disableKeys();
+    disableButtons();
 }
 
 function enableKeys(){
     isKeyDisabled = false;
+}
+
+function disableKeys(){
+    isKeyDisabled = true;
+}
+
+function enableButton(btn) {
+    btn.disabled = false;
+}
+
+function disableButton(btn) {
+    playErrorTone();
+    btn.disabled = true;
+}
+
+function enableButtons(){
+    enableButton(leftBtn);
+    enableButton(rightBtn);
+}
+
+function disableButtons(){
+    disableButton(leftBtn);
+    disableButton(rightBtn);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function shootBtnClicked(){
+
+    if (gameBoard.drop(playerCoin, ctx, playerCoinCol)) {
+        enableButtons();
+        createNewPlayerCoin();
+        // showColErrorMesage();
+        // showYouWonMessage();
+        // var player = "Abhinn";
+        // showpopUpBox("Congrats! " + player + " Won");
+
+    }
+    else {
+        // errorAlert("Try Another Column");
+        // showColErrorMesage();
+        // var testerLine = "Try another column, this one's full";
+        playErrorTone();
+        showpopUpBox(messages.colError);
+        // showYouWonMessage();
+    }
+}
+
+function rightBtnClicked(){
+
+    if(playerCoinCol == 7){
+        disableButton(rightBtn);
+        showpopUpBox(messages.tooFarRight);
+    }
+    else{
+        enableButtons();
+        playerCoin.moveRight(ctx,gameBoard.sqSize,colors.Black);
+        playerCoinCol += 1;
+    }
+
+}
+
+function leftBtnClicked(){
+
+    if(playerCoinCol == 1){
+        disableButton(leftBtn);
+        showpopUpBox(messages.tooFarLeft);
+    }
+    else{
+        enableButtons();
+        playerCoin.moveLeft(ctx,gameBoard.sqSize,colors.Black);
+        playerCoinCol -= 1;
+    }
+
 }
