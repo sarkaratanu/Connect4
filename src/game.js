@@ -33,6 +33,21 @@ const ENTER_KEY = "Enter";
 
 var tray1,tray2;
 
+var popUpBox,popUpBoxMessage;
+
+var isKeyDisabled = false;
+
+const messages = {
+
+    colError : "Try another column, this one's already full"
+
+
+
+}
+// let howToClosePopUp = 
+
+// var colErrorMessageLine;
+
 //styling canvas with color and position
 function canvasStyling(){
 
@@ -109,15 +124,18 @@ function setupEventHandlers() {
     // span = document.getElementById("myModal").getElementById("modalContent").getElementById("spanButton");
 
 
-    youWonMessage = document.getElementsByClassName("closeYouWonMessage")[0];
-    colErrorMessage = document.getElementsByClassName("closeColErrorMessage")[0];
+    // youWonMessage = document.getElementsByClassName("closeYouWonMessage")[0];
+    // colErrorMessage = document.getElementsByClassName("closeColErrorMessage")[0];
 
 
     leftBtn.addEventListener("click", leftBtnClicked);
     rightBtn.addEventListener("click", rightBtnClicked);
     shootBtn.addEventListener("click", shootBtnClicked);
-    colErrorMessage.addEventListener("click", closeColErrorMessage);
-    youWonMessage.addEventListener("click", closeYouWonMessage);
+    // colErrorMessage.addEventListener("click", closeColErrorMessage);
+    // youWonMessage.addEventListener("click", closeYouWonMessage);
+
+    popUpBox = document.getElementsByClassName("closepopUpBox")[0];
+    popUpBox.addEventListener("click", closepopUpBox);
 
 
 }
@@ -163,19 +181,6 @@ function main() {
 
 }
 
-function leftBtnClicked(){
-
-    if(playerCoinCol == 1){
-        disableButton(leftBtn);
-    }
-    else{
-        enableButtons();
-        playerCoin.moveLeft(ctx,gameBoard.sqSize,colors.Black);
-        playerCoinCol -= 1;
-    }
-
-}
-
 function rightBtnClicked(){
 
     if(playerCoinCol == 7){
@@ -185,6 +190,18 @@ function rightBtnClicked(){
         enableButtons();
         playerCoin.moveRight(ctx,gameBoard.sqSize,colors.Black);
         playerCoinCol += 1;
+    }
+
+}
+function leftBtnClicked(){
+
+    if(playerCoinCol == 1){
+        disableButton(leftBtn);
+    }
+    else{
+        enableButtons();
+        playerCoin.moveLeft(ctx,gameBoard.sqSize,colors.Black);
+        playerCoinCol -= 1;
     }
 
 }
@@ -236,11 +253,15 @@ function shootBtnClicked(){
         createNewPlayerCoin();
         // showColErrorMesage();
         // showYouWonMessage();
+        // var player = "Abhinn";
+        // showpopUpBox("Congrats! " + player + " Won");
 
     }
     else {
-        errorAlert("Try Another Column");
-        showColErrorMesage();
+        // errorAlert("Try Another Column");
+        // showColErrorMesage();
+        // var testerLine = "Try another column, this one's full";
+        showpopUpBox(messages.colError);
         // showYouWonMessage();
     }
 }
@@ -259,27 +280,40 @@ function enableButtons(){
     rightBtn.disabled = false;
 }
 
+function disableButtons(){
+    // console.log("entered disable buttons");
+    leftBtnClicked.disabled = true;
+    rightBtnClicked.disabled = true;
+    // console.log("exiting disable buttons");
+}
+
 //helps figure out which key has been pressed
 document.addEventListener("keydown",function(event) {
     onkeypressed(event);
 })
 
+function disableKeys(){
+    isKeyDisabled = true;
+}
 function onkeypressed(event) {
 
-    switch (event.key) {
+    if(!(isKeyDisabled)){
+        switch (event.key) {
 
-        case ARROW_LEFT:
-            leftBtnClicked();
-            break;
-
-        case ARROW_RIGHT:
-            rightBtnClicked();
-            break;
-
-        case ENTER_KEY:
-            shootBtnClicked();
-
+            case ARROW_LEFT:
+                leftBtnClicked();
+                break;
+    
+            case ARROW_RIGHT:
+                rightBtnClicked();
+                break;
+    
+            case ENTER_KEY:
+                shootBtnClicked();
+    
+        }
     }
+    
 }
 
 function errorAlert(msg) {
@@ -295,36 +329,63 @@ function showErrorMessage(msg) {
     console.log(msg);
 } // doing nothing for now
 
-function showYouWonMessage(){
+// function showYouWonMessage(){
 
-    // winnerSound.play();
-    playWinnerTone();
-    youWonMessage = document.getElementById("youWonMessage");
-    youWonMessage.style.display = "block";    
+//     // winnerSound.play();
+//     playWinnerTone();
+//     youWonMessage = document.getElementById("youWonMessage");
+//     youWonMessage.style.display = "block";    
+// }
+
+// function hideYouWonMessage() {
+//     youWonMessage = document.getElementById("youWonMessage");
+//     youWonMessage.style.display = "none";
+
+// }
+
+// function closeYouWonMessage() {
+//     hideYouWonMessage();
+// }
+
+// function showColErrorMesage(){
+//     playErrorTone();
+//     colErrorMessage = document.getElementById("colErrorMessage");
+//     colErrorMessageLine = document.getElementById("colErrorMessageLine");
+//     colErrorMessageLine.innerHTML="We are testing";
+//     colErrorMessage.style.display = "block";    
+// }
+
+// function hideColErrorMessage() {
+//     colErrorMessage = document.getElementById("colErrorMessage");
+//     colErrorMessage.style.display = "none";
+//     // createNewPlayerCoin();
+// }
+
+// function closeColErrorMessage() {
+//     hideColErrorMessage();
+// }
+
+function showpopUpBox(message){
+    disableKeys();
+    // isKeyDisabled = true;
+    disableButtons();
+    // disableButton(leftBtn);
+    // disableButton(rightBtn);
+    popUpBox = document.getElementById("popUpBox");
+    popUpBoxMessage = document.getElementById("popUpBoxMessage");
+    popUpBoxMessage.innerHTML=message;
+    popUpBox.style.display = "block";    
 }
 
-function hideYouWonMessage() {
-    youWonMessage = document.getElementById("youWonMessage");
-    youWonMessage.style.display = "none";
-
+function closepopUpBox(){
+    
+    // isKeyDisabled = false;
+    popUpBox = document.getElementById("popUpBox");
+    popUpBox.style.display = "none";
+    enableKeys();
+    enableButtons();
 }
 
-function closeYouWonMessage() {
-    hideYouWonMessage();
-}
-
-function showColErrorMesage(){
-    playErrorTone();
-    colErrorMessage = document.getElementById("colErrorMessage");
-    colErrorMessage.style.display = "block";    
-}
-
-function hideColErrorMessage() {
-    colErrorMessage = document.getElementById("colErrorMessage");
-    colErrorMessage.style.display = "none";
-    createNewPlayerCoin();
-}
-
-function closeColErrorMessage() {
-    hideColErrorMessage();
+function enableKeys(){
+    isKeyDisabled = false;
 }

@@ -10,73 +10,63 @@
   <style>
   body {font-family:'Courier New', Courier, monospace;}
 
-  /* Styling Col Error Modal */
-  .colErrorMessage {
+
+
+/* Styling Col Error Modal */
+.popUpBox {
     display: none;
     position: fixed;
     z-index: 1;
-    padding-top: 9.25%;
+    padding-top: 14.8%;
     width: 100%;
     height: 100%;
     overflow: auto;
+    /* background-color: rgb(0, 0, 0); Fallback color */
+    background-color: rgb(0, 0, 0, 0.5); /* Black w/ opacity */
   }
 
-  .colErrorMessage-content {
-    background-color: #fefefe;
-    margin: auto;
-    text-align: center;
-    padding: 20px;
-    border: 1px solid #888;
-    width: 80%;
-  }
+.popUpBoxBox-content {
+  background-color: #fefefe;
+  margin: auto;
+  text-align: center;
+  padding: 1%;
+  border: 1px solid #888;
+  width: 80%;
+}
 
-  .closeColErrorMessage {
-    color: #000000;
-    float: right;
-    font-size: 50px;
-    font-weight: bold;
-  }
+.closepopUpBox {
+  color: #000000;
+  float: right;
+  font-size: 50px;
+  font-weight: bold;
+}
 
-  .closeColErrorMessage:hover,
-  .closeColErrorMessage:focus {
-    color: #000;
-    text-decoration: none;
-    cursor: pointer;
-  }
+.closepopUpBox:hover,
+.closepopUpBox:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
 
-  /* Styling You Won Modal */
-  .youWonMessage {
-    display: none;
-    position: fixed;
-    z-index: 1;
-    padding-top: 14%;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-  }
 
-  .youWonMessage-content {
-    background-color: #fefefe;
-    margin: auto;
-    text-align: center;
-    padding: 20px;
-    border: 1px solid #888;
-    width: 80%;
-  }
 
-  .closeYouWonMessage {
-    color: #000000;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-  }
 
-  .closeYouWonMessage:hover,
-  .closeYouWonMessage:focus {
-    color: #000;
-    text-decoration: none;
-    cursor: pointer;
-  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   /* Styling Screen Table*/
   table, th, td {
@@ -93,26 +83,15 @@
 
   <body>
 
-  <h1 >Connect 4</h1>
+  <h1>Connect 4</h1>
+  
+  <div id="popUpBox" class="popUpBox">
 
-  <div id="colErrorMessage" class="colErrorMessage">
-
-  <!-- Creating Col Error Modal -->
-  <div class="colErrorMessage-content">
-    <span class="closeColErrorMessage">&times;</span>
-    <p>Try Another Column, this one is full</p>
-  </div>
-
-  </div>
-
-  <!-- Creating You Won Modal -->
-  <div id="youWonMessage" class="youWonMessage">
-
-  <!-- Modal content -->
-  <div class="youWonMessage-content">
-    <span class="closeYouWonMessage">&times;</span>
-    <p>Congratulations, Player 1 has won!!!</p>
-  </div>
+    <!-- Creating Col Error Modal -->
+    <div class="popUpBoxBox-content">
+      <span class="closepopUpBox">&times;</span>
+      <p id="popUpBoxMessage">dude</p>
+    </div>
 
   </div>
 
