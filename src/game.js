@@ -121,6 +121,7 @@ function main() {
     gameBoardResizing(); // this calculates the various margins and block sizes
 
     coinTrays();
+    
 
 
     playerCoinCol = 4;
@@ -301,7 +302,7 @@ function showColErrorMesage(){
 function hideColErrorMessage() {
     colErrorMessage = document.getElementById("colErrorMessage");
     colErrorMessage.style.display = "none";
-
+    createNewPlayerCoin();
 }
 
 function closeColErrorMessage() {

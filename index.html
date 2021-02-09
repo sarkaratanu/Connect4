@@ -1,39 +1,35 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <title>Connect 4</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
-body {font-family: Arial, Helvetica, sans-serif;}
+body {font-family:'Courier New', Courier, monospace;}
 
-/* The Modal (background) */
+/* Styling Col Error Modal */
 .colErrorMessage {
-  display: none; /* Hidden by default */
-  position: fixed; /* Stay in place */
-  z-index: 1; /* Sit on top */
-  padding-top: 0; /* Location of the box */
-  left: 78.9%;
-  top: 54.25%;
-  width: 21.6%; /* Full width */
-  height: 100%; /* Full height */
-  overflow: auto; /* Enable scroll if needed */
-  /* background-color: rgb(0,0,0); Fallback color */
-  /* background-color: rgba(0,0,0,0.4); Black w/ opacity */
+  display: none;
+  position: fixed;
+  z-index: 1;
+  padding-top: 9.25%;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
 }
 
-/* Modal Content */
 .colErrorMessage-content {
   background-color: #fefefe;
   margin: auto;
+  text-align: center;
   padding: 20px;
   border: 1px solid #888;
   width: 80%;
 }
 
-/* The Close Button */
 .closeColErrorMessage {
-  color: #aaaaaa;
+  color: #000000;
   float: right;
-  font-size: 28px;
+  font-size: 50px;
   font-weight: bold;
 }
 
@@ -44,34 +40,28 @@ body {font-family: Arial, Helvetica, sans-serif;}
   cursor: pointer;
 }
 
-
-/* The Modal (background) */
+/* Styling You Won Modal */
 .youWonMessage {
-  display: none; /* Hidden by default */
-  position: fixed; /* Stay in place */
-  z-index: 1; /* Sit on top */
-  padding-top: 0; /* Location of the box */
-  left: 78.9%;
-  top: 63.5%;
-  width: 21.6%; /* Full width */
-  height: 100%; /* Full height */
-  overflow: auto; /* Enable scroll if needed */
-  /* background-color: rgb(0,0,0); Fallback color */
-  /* background-color: rgba(0,0,0,0.4); Black w/ opacity */
+  display: none;
+  position: fixed;
+  z-index: 1;
+  padding-top: 14%;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
 }
 
-/* Modal Content */
 .youWonMessage-content {
   background-color: #fefefe;
   margin: auto;
+  text-align: center;
   padding: 20px;
   border: 1px solid #888;
   width: 80%;
 }
 
-/* The Close Button */
 .closeYouWonMessage {
-  color: #aaaaaa;
+  color: #000000;
   float: right;
   font-size: 28px;
   font-weight: bold;
@@ -83,22 +73,27 @@ body {font-family: Arial, Helvetica, sans-serif;}
   text-decoration: none;
   cursor: pointer;
 }
+
+/* Styling Screen Table*/
 table, th, td {
             border: 1px solid black;
 }
+
 </style>
+
 <script src="https://cdn.jsdelivr.net/npm/p5@1.0.0/lib/p5.min.js"></script>
     
 <meta charset="utf-8"/>
 
 </head>
+
 <body>
 
 <h1 >Connect 4</h1>
 
 <div id="colErrorMessage" class="colErrorMessage">
 
-  <!-- Modal content -->
+  <!-- Creating Col Error Modal -->
   <div class="colErrorMessage-content">
     <span class="closeColErrorMessage">&times;</span>
     <p>Try Another Column, this one is full</p>
@@ -106,7 +101,7 @@ table, th, td {
 
 </div>
 
-
+<!-- Creating You Won Modal -->
 <div id="youWonMessage" class="youWonMessage">
 
   <!-- Modal content -->
@@ -117,70 +112,76 @@ table, th, td {
 
 </div>
 
+<!-- Creating Playing Screen -->
 <table width=100% height=100%>
-<!-- row 1 -->
-<tr>
-  <td rowspan=3>
-      <!-- <canvas id="gameScreen" name="gameScreen" width="1000" height="750px"></canvas> -->
-      
-      <canvas id="gameScreen" name="gameScreen" width="1000px" height="750px"></canvas>
+  <!-- row 1 -->
+  <tr>
+    <td rowspan=3>
 
-  </td>
+        <canvas id="gameScreen" name="gameScreen" width="1250px" height="760px"></canvas>
 
-  <td>
-      <p>Player 1 ( color = red )</p>
-  </td>
+    </td>
 
-  <td>
-      <input type="text" id="player1Name" name="player1Name">
-  </td>
+    <td>
+        <p>Player 1 ( color = red )</p>
+        
+    </td>
 
-  <td>
-    <h1>Errors/Messages Below</h1>
-    <p>Click "x" to remove</p>
-  </td>
+    <td>
+        <input type="text" id="player1Name" name="player1Name">
+    </td>
+
+    <td rowspan="3">
+      <h1>Help Below</h1>
+      <p>Click "x" to remove error box</p>
+      <p>Press Enter Button to shoot</p>
+      <p>Press Left Key to move left</p>
+      <p>Press Right Key to move right</p>
+    </td>
 
 
-</tr>
+  </tr>
 
+  <!-- row 2 -->
+  <tr>
+    <td>
+        <p>Player 2 ( color = green )</p>
+    </td>
 
-<!-- row 2 -->
-<tr>
-  <td>
-      <p>Player 2 ( color = green )</p>
-  </td>
+    <td>
+        <input type="text" id="player2Name" name="player2Name">
+    </td>
 
-  <td>
-      <input type="text" id="player2Name" name="player2Name">
-  </td>
+    <td rowspan="2">
 
-  <td rowspan="2">
+    </td>
 
-  </td>
+  </tr>
 
-</tr>
+  <!-- row 3 -->
+  <tr>
 
-<!-- row 3 -->
-<tr>
+    <td colspan=2>
+        <!-- <p>Game Controls</p> -->
+        <table style="width:100%;height:100%"> 
+            <tr>
+                <td>
+                    <input type="button" id="leftBtn" name="leftBtn" value="Move Coin Left" style="width:155px">
+                </td>
+                <td>
+                    <input type="button" id="rightBtn" name="rightBtn"  value="Move Coin Right" style="width:155px">
+                </td>
+                <td>
+                    <input type="button" id="shootBtn" name="shootBtn" value="Shoot Coin"  style="width:155px" >
+                </td>
+            </tr>
+        </table>
+    
+  </tr>
+</table>
 
-  <td colspan=2>
-      <!-- <p>Game Controls</p> -->
-      <table style="width:100%;height:100%"> 
-          <tr>
-              <td>
-                  <input type="button" id="leftBtn" name="leftBtn" value="Move Coin Left" style="width:155px">
-              </td>
-              <td>
-                  <input type="button" id="rightBtn" name="rightBtn"  value="Move Coin Right" style="width:155px">
-              </td>
-              <td>
-                  <input type="button" id="shootBtn" name="shootBtn" value="Shoot Coin"  style="width:155px" >
-              </td>
-          </tr>
-
-      </table>
 <script type="module" src="./src/game.js"></script>
 
-
 </body>
+
 </html>
