@@ -36,7 +36,7 @@ var popUpBox,popUpBoxMessage;
 
 var isKeyDisabled = false;
 
-var winner;
+var winner, Player1, Player2;
 
 const messages = {
 
@@ -47,9 +47,6 @@ const messages = {
     tooFarRight : "Can't go right anymore, there's no more space",
 
 }
-// let howToClosePopUp = 
-
-// var colErrorMessageLine;
 
 //styling canvas with color and position
 function canvasStyling(){
@@ -100,8 +97,11 @@ function gameBoardResizing() {
 
 function setupTextBoxes() {
     //input textboxes
-    document.getElementById("player1Name").value="Enter Player 1 Name";
-    document.getElementById("player2Name").value="Enter Player 2 Name";
+    Player1 = document.getElementById("player1Name");
+    Player1.value = "Enter Player 1 Name";
+    
+    Player2 = document.getElementById("player2Name");
+    Player2.value="Enter Player 2 Name";
 }
 
 function coinTrays(){
@@ -252,19 +252,6 @@ function onkeypressed(event) {
     
 }
 
-function errorAlert(msg) {
-
-    // do something to show the error message
-    showErrorMessage(msg);
-
-    playErrorTone();
-
-}
-
-function showErrorMessage(msg) {
-    console.log(msg);
-} // doing nothing for now
-
 // function showYouWonMessage(){
 
 //     // winnerSound.play();
@@ -303,11 +290,6 @@ function showErrorMessage(msg) {
 
 function showpopUpBox(message){
     disableMoving();
-    // disableKeys();
-    // isKeyDisabled = true;
-    // disableButtons();
-    // disableButton(leftBtn);
-    // disableButton(rightBtn);
     popUpBox = document.getElementById("popUpBox");
     popUpBoxMessage = document.getElementById("popUpBoxMessage");
     popUpBoxMessage.innerHTML=message + messages.deafult;
@@ -315,15 +297,10 @@ function showpopUpBox(message){
 }
 
 function closepopUpBox(){
-    
-    // isKeyDisabled = false;
     popUpBox = document.getElementById("popUpBox");
     popUpBox.style.display = "none";
-    // enableKeys();
-    // enableButtons();
     enableMoving();
 }
-
 
 function enableMoving(){
     enableButtons();
@@ -361,20 +338,6 @@ function disableButtons(){
     disableButton(leftBtn);
     disableButton(rightBtn);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 function shootBtnClicked(){
@@ -425,3 +388,5 @@ function leftBtnClicked(){
     }
 
 }
+console.log(Player1);
+console.log(Player2);
