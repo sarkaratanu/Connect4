@@ -6,7 +6,6 @@ import { CoinTray } from './CoinTray.js';
 import { Slot } from './Slot.js';
 import { playWinnerTone, playErrorTone } from './Sounds.js';
 
-//canvas
 let canvas=document.getElementById("gameScreen");
 let ctx=canvas.getContext("2d");
 
@@ -388,5 +387,3 @@ function leftBtnClicked(){
     }
 
 }
-console.log(Player1);
-console.log(Player2);
