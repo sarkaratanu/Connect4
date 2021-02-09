@@ -101,6 +101,27 @@ function coinTrays(){
 
 }
 
+function setupEventHandlers() {
+
+    leftBtn = document.getElementById("leftBtn");
+    rightBtn = document.getElementById("rightBtn");
+    shootBtn = document.getElementById("shootBtn");
+    // span = document.getElementById("myModal").getElementById("modalContent").getElementById("spanButton");
+
+
+    youWonMessage = document.getElementsByClassName("closeYouWonMessage")[0];
+    colErrorMessage = document.getElementsByClassName("closeColErrorMessage")[0];
+
+
+    leftBtn.addEventListener("click", leftBtnClicked);
+    rightBtn.addEventListener("click", rightBtnClicked);
+    shootBtn.addEventListener("click", shootBtnClicked);
+    colErrorMessage.addEventListener("click", closeColErrorMessage);
+    youWonMessage.addEventListener("click", closeYouWonMessage);
+
+
+}
+
 ////////////////////// M A I N --- F U N C T I O N A L I T Y //////////////////////
 ////////////////////// M A I N --- F U N C T I O N A L I T Y //////////////////////
 ////////////////////// M A I N --- F U N C T I O N A L I T Y //////////////////////
@@ -108,7 +129,6 @@ function coinTrays(){
 main(); // call the main functionality
 // var tray1InitLength = tray1.coins.length;
 // var tray2InitLength = tray2.coins.length;
-
 
 function main() {
 
@@ -307,26 +327,4 @@ function hideColErrorMessage() {
 
 function closeColErrorMessage() {
     hideColErrorMessage();
-}
-
-
-function setupEventHandlers() {
-
-    leftBtn = document.getElementById("leftBtn");
-    rightBtn = document.getElementById("rightBtn");
-    shootBtn = document.getElementById("shootBtn");
-    // span = document.getElementById("myModal").getElementById("modalContent").getElementById("spanButton");
-
-
-    youWonMessage = document.getElementsByClassName("closeYouWonMessage")[0];
-    colErrorMessage = document.getElementsByClassName("closeColErrorMessage")[0];
-
-
-    leftBtn.addEventListener("click", leftBtnClicked);
-    rightBtn.addEventListener("click", rightBtnClicked);
-    shootBtn.addEventListener("click", shootBtnClicked);
-    colErrorMessage.addEventListener("click", closeColErrorMessage);
-    youWonMessage.addEventListener("click", closeYouWonMessage);
-
-
 }

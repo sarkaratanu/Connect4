@@ -1,97 +1,101 @@
 <!DOCTYPE html>
+
 <html>
+
 <head>
+
   <title>Connect 4</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<style>
-body {font-family:'Courier New', Courier, monospace;}
 
-/* Styling Col Error Modal */
-.colErrorMessage {
-  display: none;
-  position: fixed;
-  z-index: 1;
-  padding-top: 9.25%;
-  width: 100%;
-  height: 100%;
-  overflow: auto;
-}
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+  body {font-family:'Courier New', Courier, monospace;}
 
-.colErrorMessage-content {
-  background-color: #fefefe;
-  margin: auto;
-  text-align: center;
-  padding: 20px;
-  border: 1px solid #888;
-  width: 80%;
-}
+  /* Styling Col Error Modal */
+  .colErrorMessage {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    padding-top: 9.25%;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+  }
 
-.closeColErrorMessage {
-  color: #000000;
-  float: right;
-  font-size: 50px;
-  font-weight: bold;
-}
+  .colErrorMessage-content {
+    background-color: #fefefe;
+    margin: auto;
+    text-align: center;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+  }
 
-.closeColErrorMessage:hover,
-.closeColErrorMessage:focus {
-  color: #000;
-  text-decoration: none;
-  cursor: pointer;
-}
+  .closeColErrorMessage {
+    color: #000000;
+    float: right;
+    font-size: 50px;
+    font-weight: bold;
+  }
 
-/* Styling You Won Modal */
-.youWonMessage {
-  display: none;
-  position: fixed;
-  z-index: 1;
-  padding-top: 14%;
-  width: 100%;
-  height: 100%;
-  overflow: auto;
-}
+  .closeColErrorMessage:hover,
+  .closeColErrorMessage:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+  }
 
-.youWonMessage-content {
-  background-color: #fefefe;
-  margin: auto;
-  text-align: center;
-  padding: 20px;
-  border: 1px solid #888;
-  width: 80%;
-}
+  /* Styling You Won Modal */
+  .youWonMessage {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    padding-top: 14%;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+  }
 
-.closeYouWonMessage {
-  color: #000000;
-  float: right;
-  font-size: 28px;
-  font-weight: bold;
-}
+  .youWonMessage-content {
+    background-color: #fefefe;
+    margin: auto;
+    text-align: center;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+  }
 
-.closeYouWonMessage:hover,
-.closeYouWonMessage:focus {
-  color: #000;
-  text-decoration: none;
-  cursor: pointer;
-}
+  .closeYouWonMessage {
+    color: #000000;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
 
-/* Styling Screen Table*/
-table, th, td {
-            border: 1px solid black;
-}
+  .closeYouWonMessage:hover,
+  .closeYouWonMessage:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+  }
 
-</style>
+  /* Styling Screen Table*/
+  table, th, td {
+              border: 1px solid black;
+  }
 
-<script src="https://cdn.jsdelivr.net/npm/p5@1.0.0/lib/p5.min.js"></script>
+  </style>
+
+  <script src="https://cdn.jsdelivr.net/npm/p5@1.0.0/lib/p5.min.js"></script>
     
-<meta charset="utf-8"/>
+  <meta charset="utf-8"/>
 
-</head>
+  </head>
 
-<body>
+  <body>
 
-<h1 >Connect 4</h1>
+  <h1 >Connect 4</h1>
 
-<div id="colErrorMessage" class="colErrorMessage">
+  <div id="colErrorMessage" class="colErrorMessage">
 
   <!-- Creating Col Error Modal -->
   <div class="colErrorMessage-content">
@@ -99,10 +103,10 @@ table, th, td {
     <p>Try Another Column, this one is full</p>
   </div>
 
-</div>
+  </div>
 
-<!-- Creating You Won Modal -->
-<div id="youWonMessage" class="youWonMessage">
+  <!-- Creating You Won Modal -->
+  <div id="youWonMessage" class="youWonMessage">
 
   <!-- Modal content -->
   <div class="youWonMessage-content">
@@ -110,10 +114,10 @@ table, th, td {
     <p>Congratulations, Player 1 has won!!!</p>
   </div>
 
-</div>
+  </div>
 
-<!-- Creating Playing Screen -->
-<table width=100% height=100%>
+  <!-- Creating Playing Screen -->
+  <table width=100% height=100%>
   <!-- row 1 -->
   <tr>
     <td rowspan=3>
@@ -178,10 +182,10 @@ table, th, td {
         </table>
     
   </tr>
-</table>
+  </table>
 
-<script type="module" src="./src/game.js"></script>
+  <script type="module" src="./src/game.js"></script>
 
-</body>
+  </body>
 
-</html>
+  </html>
