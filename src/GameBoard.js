@@ -1,4 +1,4 @@
-import { colors } from './Globals.js';
+import { colors , gameColors } from './Globals.js';
 import { Coin } from './Coin.js';
 import { Slot } from './Slot.js';
 export class GameBoard {
@@ -108,7 +108,7 @@ export class GameBoard {
 
     // drawGameBoardOutline(ctx) {
 
-    //     ctx.strokeStyle = colors.White;
+    //     ctx.strokeStyle = gameColors.gridColor;
 
     //     ctx.strokeRect(this.left, this.top, this.width, this.height);
 
@@ -145,7 +145,7 @@ export class GameBoard {
     //         return (false);
     //     }
     //     else {
-    //         coin.moveDown(ctx,this.slotCounters[i] * this.sqSize, colors.Black);
+    //         coin.moveDown(ctx,this.slotCounters[i] * this.sqSize, gameColors.gameBackgroundColor);
     //         this.slotCounters[i]--;    
     //         return (true);
     //     }
@@ -180,7 +180,7 @@ export class GameBoard {
             let column = this.columns[col];
 
             var slotFound = false;
-            const backgroundColor = colors.Black;
+            const backgroundColor = gameColors.gameBackgroundColor;
 
             for(var row=this.MAX_ROWS-1; row>=0 &&  !slotFound; row--){
 

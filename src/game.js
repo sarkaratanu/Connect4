@@ -1,10 +1,10 @@
 // import { Grid } from './Grid.js';
 import { GameBoard } from './GameBoard.js';
-import { colors } from './Globals.js';
+import { colors , gameColors } from './Globals.js';
 import { Coin } from './Coin.js';
 import { CoinTray } from './CoinTray.js';
 import { Slot } from './Slot.js';
-import { playWinnerTone, playErrorTone } from './Sounds.js';
+// import { playVictoryTone, playErrorTone } from './Sounds.js';
 
 let canvas=document.getElementById("gameScreen");
 let ctx=canvas.getContext("2d");
@@ -17,7 +17,7 @@ const gameBottomMarginPct = 15;
 var gameTopMarginPx, gameBottomMarginPx, gameLeftMarginPx, gameRightMarginPx, gameBoardWidth, gameBoardHeight;
 
 var playerCoin;
-let firstColor = colors.Red;
+let firstColor = gameColors.player1Color;
 var previousColor, color;
 
 var leftBtn, rightBtn, shootBtn, playerCoinCol;
@@ -35,13 +35,14 @@ var popUpBox,popUpBoxMessage;
 
 var isKeyDisabled = false;
 
-var winner, Player1, Player2;
+var winner;
+var Player1, Player2;
 
 const messages = {
 
     deafult : " ----->>>>> Click " +  "'x'" + " to resume playing",
     colError : "Try another column, this one's already full",
-    winner : "Congrats!" + winner + "has won",
+    winner : " Congrats! " + winner + " has won!!!",
     tooFarLeft : "Can't go left anymore, there's no more space",
     tooFarRight : "Can't go right anymore, there's no more space",
 
@@ -105,16 +106,16 @@ function setupTextBoxes() {
 
 function coinTrays(){
     var coinTrayWidth = (gameBoardWidth/2) - 50;
-    // let tray1 = new CoinTray(300,100,600,300,colors.Red, 3,7);
-    tray1 = new CoinTray(gameLeftMarginPx,gameBoardHeight+gameTopMarginPx,coinTrayWidth,gameBottomMarginPx,colors.Red, 3,7);
-    // tray1 = new CoinTray(gameLeftMarginPx, gameTopMarginPx+gameBoardHeight,coinTrayWidth,gameBottomMarginPx,colors.Red,6,7);
+    // let tray1 = new CoinTray(300,100,600,300,gameColors.player1Color, 3,7);
+    tray1 = new CoinTray(gameLeftMarginPx,gameBoardHeight+gameTopMarginPx,coinTrayWidth,gameBottomMarginPx,gameColors.player1Color, 3,7);
+    // tray1 = new CoinTray(gameLeftMarginPx, gameTopMarginPx+gameBoardHeight,coinTrayWidth,gameBottomMarginPx,gameColors.player1Color,6,7);
     tray1.draw(ctx);
-    tray1.fillAllCoins(ctx , colors.Red);
+    tray1.fillAllCoins(ctx , gameColors.player1Color);
 
-    // let tray2 = new CoinTray(300,100,600,300,colors.Red, 3,7);
-    tray2 = new CoinTray((gameLeftMarginPx+gameBoardWidth) - coinTrayWidth ,gameBoardHeight+gameTopMarginPx,coinTrayWidth,gameBottomMarginPx,colors.Green, 3,7);
+    // let tray2 = new CoinTray(300,100,600,300,gameColors.player1Color, 3,7);
+    tray2 = new CoinTray((gameLeftMarginPx+gameBoardWidth) - coinTrayWidth ,gameBoardHeight+gameTopMarginPx,coinTrayWidth,gameBottomMarginPx,gameColors.player2Color, 3,7);
     tray2.draw(ctx);
-    tray2.fillAllCoins(ctx , colors.Green);
+    tray2.fillAllCoins(ctx , gameColors.player2Color);
 
 }
 
@@ -176,7 +177,7 @@ function main() {
 
     // let coin2InitX = canvas.width/2;
     // let coin2InitY = gameTopMarginPx/2;
-    // coin2 = new Coin(coin2InitX,coin2InitY,40,colors.Green);
+    // coin2 = new Coin(coin2InitX,coin2InitY,40,gameColors.player2Color);
 
     // coin2.draw(ctx);
 
@@ -197,15 +198,15 @@ function createNewPlayerCoin() {
     if (typeof previousColor == 'undefined') {
         color = firstColor;
     }
-    else if(previousColor == colors.Red){
-        color = colors.Green;
+    else if(previousColor == gameColors.player1Color){
+        color = gameColors.player2Color;
         // tray1.coins.draw()
         tray1.coins.pop();
         msg("New Tray 1 length is " + tray1.coins.length);
     }
 
     else{
-        color = colors.Red;
+        color = gameColors.player1Color;
         tray2.coins.pop();
         msg("New Tray 2 length is " + tray2.coins.length);
     }
@@ -291,7 +292,7 @@ function showpopUpBox(message){
     disableMoving();
     popUpBox = document.getElementById("popUpBox");
     popUpBoxMessage = document.getElementById("popUpBoxMessage");
-    popUpBoxMessage.innerHTML=message + messages.deafult;
+    popUpBoxMessage.innerHTML=message;
     popUpBox.style.display = "block";    
 }
 
@@ -338,7 +339,6 @@ function disableButtons(){
     disableButton(rightBtn);
 }
 
-
 function shootBtnClicked(){
 
     if (gameBoard.drop(playerCoin, ctx, playerCoinCol)) {
@@ -348,6 +348,8 @@ function shootBtnClicked(){
         // showYouWonMessage();
         // var player = "Abhinn";
         // showpopUpBox("Congrats! " + player + " Won");
+        // showpopUpBox(messages.winner);
+        // playVictoryTone();
 
     }
     else {
@@ -355,7 +357,7 @@ function shootBtnClicked(){
         // showColErrorMesage();
         // var testerLine = "Try another column, this one's full";
         playErrorTone();
-        showpopUpBox(messages.colError);
+        showpopUpBox(messages.colError + messages.deafult);
         // showYouWonMessage();
     }
 }
@@ -364,11 +366,11 @@ function rightBtnClicked(){
 
     if(playerCoinCol == 7){
         disableButton(rightBtn);
-        showpopUpBox(messages.tooFarRight);
+        showpopUpBox(messages.tooFarRight + messages.deafult);
     }
     else{
         enableButtons();
-        playerCoin.moveRight(ctx,gameBoard.sqSize,colors.Black);
+        playerCoin.moveRight(ctx,gameBoard.sqSize,gameColors.gameBackgroundColor);
         playerCoinCol += 1;
     }
 
@@ -378,12 +380,52 @@ function leftBtnClicked(){
 
     if(playerCoinCol == 1){
         disableButton(leftBtn);
-        showpopUpBox(messages.tooFarLeft);
+        showpopUpBox(messages.tooFarLeft + messages.deafult);
     }
     else{
         enableButtons();
-        playerCoin.moveLeft(ctx,gameBoard.sqSize,colors.Black);
+        playerCoin.moveLeft(ctx,gameBoard.sqSize,gameColors.gameBackgroundColor);
         playerCoinCol -= 1;
     }
 
 }
+
+ // doing nothing for now
+ function sound(src) {
+
+    this.sound = document.createElement("audio");
+  
+    this.sound.src = src;
+  
+    this.sound.setAttribute("preload", "auto");
+  
+    this.sound.setAttribute("controls", "none");
+  
+    this.sound.style.display = "none";
+  
+    document.body.appendChild(this.sound);
+  
+    this.play = function(){
+  
+        this.sound.play();
+  
+    }
+  
+    this.stop = function(){
+  
+        this.sound.pause();
+  
+    }    
+  
+  }
+  
+  var errorSound = new sound("errorSound.mp3");
+  var victorySound = new sound("victorySound.mp3")
+  
+  function playErrorTone() {
+    errorSound.play();
+  }
+  
+  function playVictoryTone(){
+    victorySound.play();
+  }

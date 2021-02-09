@@ -26,3 +26,11 @@ export const colors = {
   White : '#fff'
 
 }
+
+export const gameColors = {
+
+  player1Color : colors.Red,
+  player2Color : colors.Green,
+  gameBackgroundColor : colors.Black,
+  gridColor : colors.White
+}

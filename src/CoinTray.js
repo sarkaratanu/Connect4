@@ -1,5 +1,5 @@
 import { Coin } from "./Coin.js";
-import { colors } from './Globals.js';
+import { colors , gameColors } from './Globals.js';
 
 export class CoinTray {
 
@@ -60,7 +60,7 @@ export class CoinTray {
                 let y = this.y+row*squareSize;
 
                 // console.log(x + " -- " + y);
-                ctx.strokeStyle = colors.White;
+                ctx.strokeStyle = gameColors.gridColor;
                 ctx.strokeRect(x, y, squareSize, squareSize);
 
                 this.coins[col+row*this.totalCols] = new Coin(x+squareSize/2, y+squareSize/2, 0.8*squareSize/2, coinColor);
