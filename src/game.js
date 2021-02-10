@@ -5,7 +5,7 @@ import { Coin } from './Coin.js';
 import { CoinTray } from './CoinTray.js';
 import { Slot } from './Slot.js';
 // import { playVictoryTone, playErrorTone } from './Sounds.js';
-
+var squareSize = 52.857142857142854;
 let canvas=document.getElementById("gameScreen");
 let ctx=canvas.getContext("2d");
 
@@ -109,13 +109,18 @@ function setupTextBoxes() {
 function coinTrays(){
     var coinTrayWidth = (gameBoardWidth/2) - 50;
     // let tray1 = new CoinTray(300,100,600,300,gameColors.player1Color, 3,7);
-    tray1 = new CoinTray(gameLeftMarginPx,gameBoardHeight+gameTopMarginPx,coinTrayWidth,gameBottomMarginPx,gameColors.player1Color, 3,7);
+    // tray1 = new CoinTray(gameLeftMarginPx+gameBoard.pad,gameBoardHeight+gameTopMarginPx,coinTrayWidth,gameBottomMarginPx,gameColors.player1Color, 3,7);
+    tray1 = new CoinTray(0,gameTopMarginPx,coinTrayWidth,canvas.height,gameColors.player1Color,3,7);
+    // new CoinTray()
     // tray1 = new CoinTray(gameLeftMarginPx, gameTopMarginPx+gameBoardHeight,coinTrayWidth,gameBottomMarginPx,gameColors.player1Color,6,7);
     tray1.draw(ctx);
     tray1.fillAllCoins(ctx , gameColors.player1Color);
 
     // let tray2 = new CoinTray(300,100,600,300,gameColors.player1Color, 3,7);
-    tray2 = new CoinTray((gameLeftMarginPx+gameBoardWidth) - coinTrayWidth ,gameBoardHeight+gameTopMarginPx,coinTrayWidth,gameBottomMarginPx,gameColors.player2Color, 3,7);
+    // tray2 = new CoinTray((gameLeftMarginPx+gameBoardWidth) - coinTrayWidth ,gameBoardHeight+gameTopMarginPx,coinTrayWidth,gameBottomMarginPx,gameColors.player2Color, 3,7);
+    // tray2 = new CoinTray((gameLeftMarginPx+gameBoard.pad+(gameBoard.sqSize*4)) ,gameBoardHeight+gameTopMarginPx,coinTrayWidth,gameBottomMarginPx,gameColors.player2Color, 3,7);
+    // tray2 = new CoinTray((gameLeftMarginPx+gameBoard.pad+(gameBoard.sqSize*4)) ,gameBoardHeight+gameTopMarginPx,coinTrayWidth,gameBottomMarginPx,gameColors.player2Color, 3,7);
+    tray2 = new CoinTray(canvas.width-coinTrayWidth,gameTopMarginPx,coinTrayWidth,canvas.height,gameColors.player2Color,3,7);
     tray2.draw(ctx);
     tray2.fillAllCoins(ctx , gameColors.player2Color);
 
@@ -194,7 +199,8 @@ function main() {
 
 
 }
-
+var x = 6.5;
+var y = 2.5;
 function createNewPlayerCoin() {
 
     // msg(tray1InitLength);
@@ -212,8 +218,20 @@ function createNewPlayerCoin() {
     else if(previousColor == gameColors.player1Color){
         color = gameColors.player2Color;
         // tray1.coins.draw()
-        tray1.coins.pop();
-        msg("New Tray 1 length is " + tray1.coins.length);
+        
+        
+        // ctx.fillStyle = gameColors.gameBackgroundColor; 
+        // ctx.beginPath();
+        // // ctx.arc(100, 100, 20,0,Math.PI*2,true);
+        // // this.y+row*squareSize
+        
+        // ctx.arc (x*squareSize, gameTopMarginPx+(2.5*squareSize), 0.9*squareSize/2,0,Math.PI*2,true);
+        // // ctx.arc(6.5*squareSize, gameTopMarginPx+(1.5*squareSize), 0.9*squareSize/2,0,Math.PI*2,true);
+        // ctx.closePath();
+        // ctx.fill();
+        // tray1.coins.pop();
+        // msg("New Tray 1 length is " + tray1.coins.length);
+        // x--;
     }
 
     else{

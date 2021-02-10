@@ -8,55 +8,68 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
-  body {font-family:'Courier New', Courier, monospace;}
 
-.GameControls {
-  margin: auto;
-  text-align: center;
-  /* align-content: center; */
-}
-
-.HelpMessages {
-  margin: auto;
-  text-align: center;
-}
-.popUpBox {
-    display: none;
-    position: fixed;
-    z-index: 1;
-    padding-top: 14.8%;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    /* background-color: rgb(0, 0, 0); Fallback color */
-    background-color: rgb(0, 0, 0, 0.5); /* Black w/ opacity */
+  .Header {
+    text-align: center;
+    color: white;
   }
 
-.popUpBoxBox-content {
-  background-color: #fefefe;
-  margin: auto;
-  text-align: center;
-  padding: 1%;
-  border: 1px solid #888;
-  width: 80%;
-}
+  body {
+    font-family:'Courier New', Courier, monospace;
+    background: black;
+  }
+  .GameControls {
+    margin: auto;
+    text-align: center;
+    color: white;
+    /* align-content: center; */
+  }
+  .Player1 {
+    color: white;
+  }
 
-.closepopUpBox {
-  color: #000000;
-  float: right;
-  font-size: 50px;
-  font-weight: bold;
-}
+  .Player2 {
+    color: white;
+  }
 
-.closepopUpBox:hover,
-.closepopUpBox:focus {
-  color: #000;
-  text-decoration: none;
-  cursor: pointer;
-}
+  .HelpMessages {
+    margin: auto;
+    text-align: center;
+    color: white;
+  }
+  .popUpBox {
+      display: none;
+      position: fixed;
+      z-index: 1;
+      padding-top: 14.8%;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      /* background-color: rgb(0, 0, 0); Fallback color */
+      background-color: rgb(0, 0, 0, 0.5); /* Black w/ opacity */
+    }
 
-  table, th, td {
-              border: 1px solid black;
+  .popUpBoxBox-content {
+    background-color: #fefefe;
+    margin: auto;
+    text-align: center;
+    padding: 1%;
+    border: 1px solid #888;
+    width: 80%;
+  }
+
+  .closepopUpBox {
+    color: #000000;
+    float: right;
+    font-size: 50px;
+    font-weight: bold;
+  }
+
+  .closepopUpBox:hover,
+  .closepopUpBox:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
   }
 
   </style>
@@ -69,11 +82,13 @@
 
   <body>
 
-  <h1>Connect 4</h1>
+    <div id="Header" class="Header">
+      <!-- <h1>Connect 4</h1> -->
+      <font size="100"> Connect 4</font>	
+    </div>
   
   <div id="popUpBox" class="popUpBox">
 
-    <!-- Creating Col Error Modal -->
     <div class="popUpBoxBox-content">
       <span class="closepopUpBox">&times;</span>
       <p id="popUpBoxMessage">dude</p>
@@ -91,14 +106,20 @@
     </td>
 
     <td>
+      <div id="Player1" class="Player1">
         <p>Player 1 ( color = red )</p>
+      </div>
+        
         <input type="text" id="player1Name" name="player1Name">
         
     </td>
 
     <td>
         <!-- <input type="text" id="player1Name" name="player1Name"> -->
-        <p>Player 2 ( color = green )</p>
+        <div id="Player2" class="Player2">
+          <p>Player 2 ( color = green )</p>
+        </div>
+ 
         <input type="text" id="player2Name" name="player2Name">
     </td>
 
@@ -110,9 +131,9 @@
 
       <div id="GameControls" class="GameControls">
         <h1>Game Controls</h1>
-        <input type="image" src="leftArrow.png" id="leftArrow" name="leftArrow" width="50" height="50">
-        <input type="image" src="rightArrow.png" id="rightArrow" name="rightArrow" width="50" height="50">
-        <input type="image" src="shootButton.png" id="shootButton" name="shootButton" width="50" height="50">
+        <input type="image" src="leftArrow.png" id="leftArrow" name="leftArrow" width="100px" height="100px">
+        <input type="image" src="rightArrow.png" id="rightArrow" name="rightArrow" width="100px" height="100px">
+        <input type="image" src="shootButton.png" id="shootButton" name="shootButton" width="100px" height="100px">
         
       </div>
         <!-- <p>Player 2 ( color = green )</p> -->
