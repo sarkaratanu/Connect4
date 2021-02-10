@@ -38,6 +38,8 @@ var isKeyDisabled = false;
 var winner;
 var Player1, Player2;
 
+var leftArrow,rightArrow,shootButton;
+
 const messages = {
 
     deafult : " ----->>>>> Click " +  "'x'" + " to resume playing",
@@ -121,19 +123,28 @@ function coinTrays(){
 
 function setupEventHandlers() {
 
-    leftBtn = document.getElementById("leftBtn");
-    rightBtn = document.getElementById("rightBtn");
-    shootBtn = document.getElementById("shootBtn");
+    // leftBtn = document.getElementById("leftBtn");
+    // rightBtn = document.getElementById("rightBtn");
+    // shootBtn = document.getElementById("shootBtn");
     // span = document.getElementById("myModal").getElementById("modalContent").getElementById("spanButton");
 
 
     // youWonMessage = document.getElementsByClassName("closeYouWonMessage")[0];
     // colErrorMessage = document.getElementsByClassName("closeColErrorMessage")[0];
 
+    // leftArrow = 
+    leftArrow = document.getElementById("leftArrow");
+    leftArrow.addEventListener("click",leftArrowClicked);
 
-    leftBtn.addEventListener("click", leftBtnClicked);
-    rightBtn.addEventListener("click", rightBtnClicked);
-    shootBtn.addEventListener("click", shootBtnClicked);
+    rightArrow = document.getElementById("rightArrow");
+    rightArrow.addEventListener("click",rightArrowClicked);
+
+    shootButton = document.getElementById("shootButton");
+    shootButton.addEventListener("click",shootButtonClicked);
+
+    // leftBtn.addEventListener("click", leftBtnClicked);
+    // rightBtn.addEventListener("click", rightBtnClicked);
+    // shootBtn.addEventListener("click", shootBtnClicked);
     // colErrorMessage.addEventListener("click", closeColErrorMessage);
     // youWonMessage.addEventListener("click", closeYouWonMessage);
 
@@ -330,13 +341,17 @@ function disableButton(btn) {
 }
 
 function enableButtons(){
-    enableButton(leftBtn);
-    enableButton(rightBtn);
+    // enableButton(leftBtn);
+    enableButton(leftArrow);
+    // enableButton(rightBtn);
+    enableButton(rightArrow);
 }
 
 function disableButtons(){
-    disableButton(leftBtn);
-    disableButton(rightBtn);
+    // disableButton(leftBtn);
+    disableButton(leftArrow);
+    // disableButton(rightBtn);
+    disableButton(rightArrow);
 }
 
 function shootBtnClicked(){
@@ -365,7 +380,8 @@ function shootBtnClicked(){
 function rightBtnClicked(){
 
     if(playerCoinCol == 7){
-        disableButton(rightBtn);
+        // disableButton(rightBtn);
+        disableButton(rightArrow);
         showpopUpBox(messages.tooFarRight + messages.deafult);
     }
     else{
@@ -379,7 +395,9 @@ function rightBtnClicked(){
 function leftBtnClicked(){
 
     if(playerCoinCol == 1){
-        disableButton(leftBtn);
+        // disableButton(leftBtn);
+        disableButton(leftArrow);
+
         showpopUpBox(messages.tooFarLeft + messages.deafult);
     }
     else{
@@ -429,3 +447,16 @@ function leftBtnClicked(){
   function playVictoryTone(){
     victorySound.play();
   }
+
+  function leftArrowClicked(){
+      console.log("Testing img function");
+      leftBtnClicked();
+  }
+  
+  function rightArrowClicked(){
+    console.log("Testing img function");
+    rightBtnClicked();
+}
+function shootButtonClicked(){
+    shootBtnClicked();
+}

@@ -10,6 +10,16 @@
   <style>
   body {font-family:'Courier New', Courier, monospace;}
 
+.GameControls {
+  margin: auto;
+  text-align: center;
+  /* align-content: center; */
+}
+
+.HelpMessages {
+  margin: auto;
+  text-align: center;
+}
 .popUpBox {
     display: none;
     position: fixed;
@@ -74,72 +84,81 @@
   <table width=100% height=100%>
   <!-- row 1 -->
   <tr>
-    <td rowspan=3>
+    <td rowspan=4>
 
-        <canvas id="gameScreen" name="gameScreen" width="1250px" height="760px"></canvas>
+        <canvas id="gameScreen" name="gameScreen" width="1400px" height="760px"></canvas>
 
     </td>
 
     <td>
         <p>Player 1 ( color = red )</p>
+        <input type="text" id="player1Name" name="player1Name">
         
     </td>
 
     <td>
-        <input type="text" id="player1Name" name="player1Name">
+        <!-- <input type="text" id="player1Name" name="player1Name"> -->
+        <p>Player 2 ( color = green )</p>
+        <input type="text" id="player2Name" name="player2Name">
     </td>
-
-    <td rowspan="3">
-      <h1>Look Below For Help</h1>
-      <p>Press Enter Button to Shoot/Drop Coin</p>
-      <p>Press Left Key to Move Coin left</p>
-      <p>Press Right Key to Move Coin Right</p>
-    </td>
-
 
   </tr>
 
   <!-- row 2 -->
   <tr>
-    <td>
-        <p>Player 2 ( color = green )</p>
+    <td colspan="2">
+
+      <div id="GameControls" class="GameControls">
+        <h1>Game Controls</h1>
+        <input type="image" src="leftArrow.png" id="leftArrow" name="leftArrow" width="50" height="50">
+        <input type="image" src="rightArrow.png" id="rightArrow" name="rightArrow" width="50" height="50">
+        <input type="image" src="shootButton.png" id="shootButton" name="shootButton" width="50" height="50">
+        
+      </div>
+        <!-- <p>Player 2 ( color = green )</p> -->
+        
     </td>
 
-    <td>
-        <input type="text" id="player2Name" name="player2Name">
-    </td>
+    <!-- <td> -->
+        <!-- <input type="text" id="player2Name" name="player2Name"> -->
+    <!-- </td> -->
 
-    <td rowspan="2">
+    <!-- <td rowspan="2"> -->
 
-    </td>
+    <!-- </td> -->
 
   </tr>
 
   <!-- row 3 -->
   <tr>
 
-    <td colspan=2>
-        <!-- <p>Game Controls</p> -->
-        <table style="width:100%;height:100%"> 
-            <tr>
-                <td>
-                    <input type="button" id="leftBtn" name="leftBtn" value="Move Coin Left" style="width:155px">
-                    <!-- <input type="image" src="leftArrow.jpg" name="leftArrow" class="leftArrow" id="leftArrow" /> -->
-                    <!-- <div style="position: absolute; left: 10px; top: 40px;">  -->
-                      <!-- <img src="leftArrow.jpg" width="114" height="38" onclick="leftBtnClicked();" /> -->
-                    </div>
-                  ﻿
+    <td colspan="2">
 
-                </td>
-                <td>
-                    <input type="button" id="rightBtn" name="rightBtn"  value="Move Coin Right" style="width:155px">
-                </td>
-                <td>
-                    <input type="button" id="shootBtn" name="shootBtn" value="Shoot Coin"  style="width:155px" >
-                </td>
-            </tr>
-        </table>
+      <div id="HelpMessages" class="HelpMessages">
+
+        <h1>Look Below For Help</h1>
+        <p>Press Enter Button to Shoot/Drop Coin</p>
+        <p>Press Left Key to Move Coin left</p>
+        <p>Press Right Key to Move Coin Right</p>
+        
+      </div>
+      
+
+    </td>
+       
     
+  </tr>
+
+  <tr>
+
+
+<!-- 
+    <h1>Look Below For Help</h1>
+    <p>Press Enter Button to Shoot/Drop Coin</p>
+    <p>Press Left Key to Move Coin left</p>
+    <p>Press Right Key to Move Coin Right</p> -->
+
+
   </tr>
   </table>
 
