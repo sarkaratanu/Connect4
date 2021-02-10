@@ -26,8 +26,8 @@ export class CoinTray {
 
     draw(ctx){
 
-        ctx.strokeStyle = this.color;
-        ctx.strokeRect(this.x, this.y, this.width, this.height);
+        // ctx.strokeStyle = this.color;
+        // ctx.strokeRect(this.x, this.y, this.width, this.height);
 
     }
 
@@ -49,6 +49,7 @@ export class CoinTray {
         else {
             squareSize = sqSizeBasedOnWidth;
         }
+        console.log("SquareSize is " + squareSize);
 
         // draw the squares
         for (var row=0;row<this.rows;row++) {
