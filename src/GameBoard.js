@@ -1,6 +1,7 @@
 import { colors , gameColors } from './Globals.js';
 import { Coin } from './Coin.js';
 import { Slot } from './Slot.js';
+import { playVictoryTone , playErrorTone , playDropSound } from './Sounds.js';
 export class GameBoard {
 
     constructor(ctx) {
@@ -10,6 +11,9 @@ export class GameBoard {
         this.pad;
 
         this.firstTime = true;
+
+        this.matchFound = false;
+        this.playerColor;
 
 
         this.slotCounters = new Array(this.MAX_COLS);
@@ -163,53 +167,57 @@ export class GameBoard {
 
         // console.log("Shoot Column >>" + col);
 
-        if (false) {
 
-            console.log(this.columns[0][0]);
-            this.columns[3][3].drawFunky(ctx);
+        let column = this.columns[col];
+        var row,rowForSlotFilled;
 
-            console.log(this.columns[3][3].isEmpty());
+        var slotFound = false;
+        const backgroundColor = gameColors.gameBackgroundColor;
 
+        for(row=this.MAX_ROWS-1; row>=0 &&  !slotFound; row--){
 
+            let slot=column[row];
+
+            if (slot.isEmpty()) {
+                // fill this slot with the given coin
+                slot.fill(ctx, coin, backgroundColor);
+                playDropSound();
+                slotFound = true;
+                rowForSlotFilled = row;
+            }
+            else {
+                // empty slot not found, check the one above in the for loop
+            }
+
+            // rowForWinner = row;
         }
-        else {
+        // this.detectWinner(col,row);
 
-            let column = this.columns[col];
-            var row;
+        if(slotFound){
+            this.detectWinner(col,rowForSlotFilled);
+        }
+        return (slotFound);
 
-            var slotFound = false;
-            const backgroundColor = gameColors.gameBackgroundColor;
-
-            for(row=this.MAX_ROWS-1; row>=0 &&  !slotFound; row--){
-
-                let slot=column[row];
-
-                if (slot.isEmpty()) {
-                    // fill this slot with the given coin
-                    slot.fill(ctx, coin, backgroundColor);
-                    slotFound = true;
-                }
-                else {
-                    // empty slot not found, check the one above in the for loop
-                }
-            }
-
-            return (slotFound);
-
-            if(this.detectWinner(col,row)){
+            
+            
+            // if(this.detectWinner(col,row)){
 
 
-            }
-            else{}
+            // }
+            // else{}
+            // this.detectWinner();
     
 
-        }
+        
+
+        // this.detectWinner(col,row);
 
         
 
 
 
     }
+
 
 
     drawHorizontalLines(ctx , pad) {
@@ -236,14 +244,166 @@ export class GameBoard {
         }
     }
 
-    detectWinner(row){
+    detectWinner(col,row){
+        
+        console.log("---------col is " + col + " row is " + row + "---------");
 
-        console.log("row = " + row);
+        let currColor = this.columns[col][row].coin.color;
+
+        let leftCount = this.scanLeft(col,row,currColor);
+        let rightCount = this.scanRight(col,row,currColor);
+
+        let aboveCount = this.scanAbove(col,row,currColor);
+        let belowCount = this.scanBelow(col,row,currColor);
+        
+        if (leftCount + rightCount == 3) {
+            console.log("found a match");
+            this.matchFound=true;
+            return this.matchFound;
+        }
+
+        
+        if (aboveCount + belowCount == 3) {
+            console.log("found a match");
+            this.matchFound=true;
+            return this.matchFound;
+        }
+
+        
+    
+    }
 
 
+    scanLeft(col, row, currColor) {
+
+        let matchCounter=0;
+        let keepScanning=true;
+        
+        
+
+        while(keepScanning && col>0) {
+
+            col--;
+            let leftSlot = this.columns[col][row];
+
+            if (leftSlot.isEmpty()) {
+                keepScanning=false;
+            }
+            else { // left slot is not empty
+                if (leftSlot.coin.color == currColor) {
+                    matchCounter++;
+                    this.playerColor = currColor;
+                }
+                else { // a different color was found, so stop scanning
+                    keepScanning=false;
+                    this.playerColor = leftSlot.coin.color;
+                }
+            }
+        }
+        
+        return(matchCounter);
+
+    }
+
+    scanRight(col, row, currColor) {
+
+        let matchCounter=0;
+        let keepScanning=true;
+        
+        
+
+        while(keepScanning && col<this.MAX_COLS-1) {
+
+            col++;
+            let rightSlot = this.columns[col][row];
+
+            if (rightSlot.isEmpty()) {
+                keepScanning=false;
+            }
+            else { // left slot is not empty
+                if (rightSlot.coin.color == currColor) {
+                    matchCounter++;
+                    this.playerColor = currColor;
+                }
+                else { // a different color was found, so stop scanning
+                    keepScanning=false;
+                    this.playerColor = rightSlot.coin.color;
+                }
+            }
+        }
+        
+        return(matchCounter);
+
+    }
+
+    scanAbove(col, row, currColor) {
+
+        let matchCounter=0;
+        let keepScanning=true;
+        
+        
+
+        while(keepScanning && row>0) {
+
+            row--;
+            let aboveSlot = this.columns[col][row];
+
+            if (aboveSlot.isEmpty()) {
+                keepScanning=false;
+            }
+            else { // left slot is not empty
+                if (aboveSlot.coin.color == currColor) {
+                    matchCounter++;
+                    this.playerColor = currColor;
+                }
+                else { // a different color was found, so stop scanning
+                    keepScanning=false;
+                    this.playerColor = aboveSlot.coin.color;
+                }
+            }
+        }
+        
+        return(matchCounter);
+
+    }
+
+    scanBelow(col, row, currColor) {
+        // console.log("entered");
+
+        let matchCounter=0;
+        let keepScanning=true;
+        
+        
+
+        while(keepScanning && row<this.MAX_ROWS-1) {
+
+            row++;
+            let belowSlot = this.columns[col][row];
+
+            if(row < this.MAX_ROWS){
+                if (belowSlot.isEmpty()) {
+                    keepScanning=false;
+                }
+                else { // left slot is not empty
+                    if (belowSlot.coin.color == currColor) {
+                        matchCounter++;
+                        this.playerColor = currColor;
+                    }
+                    else { // a different color was found, so stop scanning
+                        keepScanning=false;
+                        this.playerColor = belowSlot.coin.color;
+                    }
+                }
+            }
+            
+        }
+        
+        return(matchCounter);
 
     }
 
 
+
+    
 }
 

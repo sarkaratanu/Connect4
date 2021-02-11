@@ -4,6 +4,7 @@ import { colors , gameColors } from './Globals.js';
 import { Coin } from './Coin.js';
 import { CoinTray } from './CoinTray.js';
 import { Slot } from './Slot.js';
+import { playVictoryTone , playErrorTone , playDropSound } from './Sounds.js';
 // import { playVictoryTone, playErrorTone } from './Sounds.js';
 // var squareSize = 52.857142857142854;
 let canvas=document.getElementById("gameScreen");
@@ -27,9 +28,10 @@ var youWonMessage,colErrorMessage;
 
 const ARROW_RIGHT = "ArrowRight";
 const ARROW_LEFT = "ArrowLeft";
-const ENTER_KEY = "Enter";
+const ARROW_DOWN = "ArrowDown";
 
 var tray1,tray2;
+var winnerPopUpBox,winnerPopUpBoxMessage;
 
 var popUpBox,popUpBoxMessage;
 
@@ -38,15 +40,23 @@ var isKeyDisabled = false;
 var winner;
 var Player1, Player2;
 
+
+// const page = {
+    // reload : "location.href=location.href",
+// }
 var leftArrow,rightArrow,shootButton;
+
+var reloadPageBox = document.getElementById("reloadPage");
 
 const messages = {
 
     deafult : " ----->>>>> Click " +  "'x'" + " to resume playing",
     colError : "Try another column, this one's already full",
-    winner : " Congrats! " + winner + " has won!!!",
+    // winner : " Congrats! " + winner + " has won!!!",
     tooFarLeft : "Can't go left anymore, there's no more space",
     tooFarRight : "Can't go right anymore, there's no more space",
+    player1HasWon : " Congrats! " + "Player 1" + " has won!!!",
+    player2HasWon : " Congrats! " + "Player 2" + " has won!!!",
 
 }
 
@@ -99,18 +109,21 @@ function gameBoardResizing() {
 
 function setupTextBoxes() {
     //input textboxes
-    Player1 = document.getElementById("player1Name");
-    Player1.value = "Enter Player 1 Name";
+    // Player1 = document.getElementById("player1Name");
+    // Player1.value = "Enter Player 1 Name";
     
-    Player2 = document.getElementById("player2Name");
-    Player2.value="Enter Player 2 Name";
+    // Player2 = document.getElementById("player2Name");
+    // Player2.value="Enter Player 2 Name";
 }
 
 function coinTrays(){
     var coinTrayWidth = (gameBoardWidth/2) - 50;
     // let tray1 = new CoinTray(300,100,600,300,gameColors.player1Color, 3,7);
     // tray1 = new CoinTray(gameLeftMarginPx+gameBoard.pad,gameBoardHeight+gameTopMarginPx,coinTrayWidth,gameBottomMarginPx,gameColors.player1Color, 3,7);
+    let height = canvas.height;
     tray1 = new CoinTray(0,gameTopMarginPx,coinTrayWidth,canvas.height,gameColors.player1Color,3,7);
+    console.log("canvas height is " + height);   
+    // tray1 = new CoinTray(0,gameBottomMarginPx,100,coinTrayWidth,gameColors.player1Color, 3,7);
     // new CoinTray()
     // tray1 = new CoinTray(gameLeftMarginPx, gameTopMarginPx+gameBoardHeight,coinTrayWidth,gameBottomMarginPx,gameColors.player1Color,6,7);
     tray1.draw(ctx);
@@ -155,6 +168,14 @@ function setupEventHandlers() {
 
     popUpBox = document.getElementsByClassName("closepopUpBox")[0];
     popUpBox.addEventListener("click", closepopUpBox);
+
+    // winnerPopUpBoxMessage = document.getElementsByClassName("closepopUpBox")[0];
+
+    // reloadPageBox = document.getElementsByClassName("reloadPageBox")[0];
+    // reloadPageBox.addEventListener("click",page.reload);
+
+    // reloadP = document.getElementsByClassName("closepopUpBox")[0];
+    // popUpBox.addEventListener("click", closepopUpBox);
 
 
 }
@@ -273,7 +294,7 @@ function onkeypressed(event) {
                 rightBtnClicked();
                 break;
     
-            case ENTER_KEY:
+            case ARROW_DOWN:
                 shootBtnClicked();
     
         }
@@ -376,6 +397,26 @@ function shootBtnClicked(){
 
     if (gameBoard.drop(playerCoin, ctx, playerCoinCol)) {
         enableButtons();
+        // if(gameBoard.detectWinner()){
+        //     showWinner();
+        // }
+        if(gameBoard.matchFound){
+            // showWinner();
+            if(gameBoard.playerColor == gameColors.player1Color){
+                disableButtons();
+                // showpopUpBox(messages.player1HasWon);
+                showWinnerPopUpBox(messages.player1HasWon);
+            }
+            else{
+                // disableButtons();
+                // disableButton(leftBtn);
+                // disableButton(rightBtn);
+                disable();
+                // showpopUpBox(messages.player2HasWon);
+                showWinnerPopUpBox(messages.player2HasWon);
+            }
+            
+        }
         createNewPlayerCoin();
         // showColErrorMesage();
         // showYouWonMessage();
@@ -427,44 +468,44 @@ function leftBtnClicked(){
 }
 
  // doing nothing for now
- function sound(src) {
+//  function sound(src) {
 
-    this.sound = document.createElement("audio");
+//     this.sound = document.createElement("audio");
   
-    this.sound.src = src;
+//     this.sound.src = src;
   
-    this.sound.setAttribute("preload", "auto");
+//     this.sound.setAttribute("preload", "auto");
   
-    this.sound.setAttribute("controls", "none");
+//     this.sound.setAttribute("controls", "none");
   
-    this.sound.style.display = "none";
+//     this.sound.style.display = "none";
   
-    document.body.appendChild(this.sound);
+//     document.body.appendChild(this.sound);
   
-    this.play = function(){
+//     this.play = function(){
   
-        this.sound.play();
+//         this.sound.play();
   
-    }
+//     }
   
-    this.stop = function(){
+//     this.stop = function(){
   
-        this.sound.pause();
+//         this.sound.pause();
   
-    }    
+//     }    
   
-  }
+//   }
   
-  var errorSound = new sound("errorSound.mp3");
-  var victorySound = new sound("victorySound.mp3")
+//   var errorSound = new sound("errorSound.mp3");
+//   var victorySound = new sound("victorySound.mp3")
   
-  function playErrorTone() {
-    errorSound.play();
-  }
+//   function playErrorTone() {
+//     errorSound.play();
+//   }
   
-  function playVictoryTone(){
-    victorySound.play();
-  }
+//   function playVictoryTone(){
+//     victorySound.play();
+//   }
 
   function leftArrowClicked(){
       console.log("Testing img function");
@@ -478,3 +519,42 @@ function leftBtnClicked(){
 function shootButtonClicked(){
     shootBtnClicked();
 }
+
+function showWinner(){
+    showpopUpBox(messages.winner);
+}
+
+function disable(){
+    rightArrow.disabled = "true";
+    leftArrow.disabled = "true";
+    shootButton.disabled = "true";
+}
+
+
+
+
+
+
+
+
+
+
+
+
+function showWinnerPopUpBox(message){
+    disableMoving();
+    playVictoryTone();
+    winnerPopUpBox = document.getElementById("winnerPopUpBox");
+    winnerPopUpBoxMessage = document.getElementById("winnerPopUpBoxMessage");
+    winnerPopUpBoxMessage.innerHTML=message;
+    winnerPopUpBox.style.display = "block";    
+}
+
+
+
+
+
+
+
+
+
