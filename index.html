@@ -9,68 +9,93 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
 
-  .Header {
-    text-align: center;
-    color: white;
-  }
-
-  body {
-    font-family:'Courier New', Courier, monospace;
-    background: black;
-  }
-  .GameControls {
-    margin: auto;
-    text-align: center;
-    color: white;
-    /* align-content: center; */
-  }
-  .Player1 {
-    color: white;
-  }
-
-  .Player2 {
-    color: white;
-  }
-
-  .HelpMessages {
-    margin: auto;
-    text-align: center;
-    color: white;
-  }
-  .popUpBox {
-      display: none;
-      position: fixed;
-      z-index: 1;
-      padding-top: 14.8%;
-      width: 100%;
-      height: 100%;
-      overflow: auto;
-      /* background-color: rgb(0, 0, 0); Fallback color */
-      background-color: rgb(0, 0, 0, 0.5); /* Black w/ opacity */
+    .Header {
+      text-align: center;
+      color: white;
     }
 
-  .popUpBoxBox-content {
-    background-color: #fefefe;
-    margin: auto;
-    text-align: center;
-    padding: 1%;
-    border: 1px solid #888;
-    width: 80%;
-  }
+    body {
+      font-family:'Courier New', Courier, monospace;
+      background: black;
+    }
 
-  .closepopUpBox {
-    color: #000000;
-    float: right;
-    font-size: 50px;
-    font-weight: bold;
-  }
+    .GameControls {
+      margin: auto;
+      text-align: center;
+      color: white;
+    }
 
-  .closepopUpBox:hover,
-  .closepopUpBox:focus {
-    color: #000;
-    text-decoration: none;
-    cursor: pointer;
-  }
+    .Player1 {
+      text-align: center;
+      color: white;
+    }
+
+    .Player2 {
+      text-align: center;
+      color: white;
+    }
+
+    .HelpMessages {
+      margin: auto;
+      text-align: center;
+      color: white;
+    }
+
+    .popUpBox {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        padding-top: 14.735%;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        /* background-color: rgb(0, 0, 0); Fallback color */
+        background-color: rgb(0, 0, 0, 0.5); /* Black w/ opacity */
+      }
+    .popUpBoxBox-content {
+      background-color: #000000;
+      margin: auto;
+      text-align: center;
+      color: white;
+      padding: 1%;
+      border: 1px solid #888;
+      width: 80%;
+    }
+    .closepopUpBox {
+      color: #ffffff;
+      float: right;
+      font-size: 50px;
+      font-weight: bold;
+    }
+    .closepopUpBox:hover,
+    .closepopUpBox:focus {
+      color: rgb(255, 255, 255);
+      text-decoration-color: white;
+      cursor: pointer;
+    }
+
+
+    .winnerPopUpBox {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        padding-top: 14.735%;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        border-color: white;
+        background-color: rgb(0, 0, 0); /*Fallback color */
+        background-color: rgb(0, 0, 0); /* Black w/ opacity */
+      }
+    .winnerPopUpBox-content {
+      background-color: #000000;
+      margin: auto;
+      text-align: center;
+      color: white;
+      padding: 1%;
+      border: 1px solid #888;
+      width: 80%;
+    }
 
   </style>
 
@@ -83,104 +108,77 @@
   <body>
 
     <div id="Header" class="Header">
-      <!-- <h1>Connect 4</h1> -->
       <font size="100"> Connect 4</font>	
     </div>
   
   <div id="popUpBox" class="popUpBox">
-
     <div class="popUpBoxBox-content">
       <span class="closepopUpBox">&times;</span>
-      <p id="popUpBoxMessage">dude</p>
+      <p id="popUpBoxMessage"></p>
     </div>
+  </div>
 
+  <div id="winnerPopUpBox" class="winnerPopUpBox">
+    <div class="winnerPopUpBox-content">
+      <p id="winnerPopUpBoxMessage"></p>
+      <input type="image" src="newGame.png" id="newGame" name="newGame" width="200px" height="150px" onClick="location.href=location.href">
+    </div>
   </div>
 
   <table width=100% height=100%>
-  <!-- row 1 -->
-  <tr>
-    <td rowspan=4>
+    <!-- row 1 -->
+    <tr>
+      <td rowspan=4>
+          <canvas id="gameScreen" name="gameScreen" width="1400px" height="760px"></canvas>
+      </td>
 
-        <canvas id="gameScreen" name="gameScreen" width="1400px" height="760px"></canvas>
+      <td>
+        <div id="Player1" class="Player1">
+          <p>Player 1 ( color = red )</p>
+        </div>
+      </td>
 
-    </td>
-
-    <td>
-      <div id="Player1" class="Player1">
-        <p>Player 1 ( color = red )</p>
-      </div>
-        
-        <input type="text" id="player1Name" name="player1Name">
-        
-    </td>
-
-    <td>
+    </tr>
+    <!-- row 2 -->
+    <tr>
+      <td>
         <!-- <input type="text" id="player1Name" name="player1Name"> -->
         <div id="Player2" class="Player2">
           <p>Player 2 ( color = green )</p>
         </div>
- 
-        <input type="text" id="player2Name" name="player2Name">
-    </td>
 
-  </tr>
-
-  <!-- row 2 -->
-  <tr>
-    <td colspan="2">
-
-      <div id="GameControls" class="GameControls">
-        <h1>Game Controls</h1>
-        <input type="image" src="leftArrow.png" id="leftArrow" name="leftArrow" width="100px" height="100px">
-        <input type="image" src="rightArrow.png" id="rightArrow" name="rightArrow" width="100px" height="100px">
-        <input type="image" src="shootButton.png" id="shootButton" name="shootButton" width="100px" height="100px">
-        
-      </div>
-        <!-- <p>Player 2 ( color = green )</p> -->
-        
-    </td>
-
-    <!-- <td> -->
         <!-- <input type="text" id="player2Name" name="player2Name"> -->
-    <!-- </td> -->
+      </td>
+    </tr>
 
-    <!-- <td rowspan="2"> -->
+    <!-- row 3 -->
+    <tr>
+      <td colspan="2">
 
-    <!-- </td> -->
-
-  </tr>
-
-  <!-- row 3 -->
-  <tr>
-
-    <td colspan="2">
-
-      <div id="HelpMessages" class="HelpMessages">
-
-        <h1>Look Below For Help</h1>
-        <p>Press Enter Button to Shoot/Drop Coin</p>
-        <p>Press Left Key to Move Coin left</p>
-        <p>Press Right Key to Move Coin Right</p>
-        
-      </div>
-      
-
-    </td>
-       
+        <div id="GameControls" class="GameControls">
+          <h1>Game Controls</h1>
+          <input type="image" src="leftArrow.png" id="leftArrow" name="leftArrow" width="100px" height="100px">
+          <input type="image" src="shootButton.png" id="shootButton" name="shootButton" width="100px" height="100px">
+          <input type="image" src="rightArrow.png" id="rightArrow" name="rightArrow" width="100px" height="100px">
+          <input type="image" src="newGame.png" id="newGame" name="newGame" width="200px" height="150px" onClick="location.href=location.href">
+        </div>
+          
+      </td>
+    </tr>
     
-  </tr>
+    <!-- row 4 -->
+    <tr>
+      <td colspan="2">
+        <div id="HelpMessages" class="HelpMessages">
 
-  <tr>
-
-
-<!-- 
-    <h1>Look Below For Help</h1>
-    <p>Press Enter Button to Shoot/Drop Coin</p>
-    <p>Press Left Key to Move Coin left</p>
-    <p>Press Right Key to Move Coin Right</p> -->
-
-
-  </tr>
+          <h1>Look Below For Help</h1>
+          <p>Press Down Arrow to Shoot/Drop Coin</p>
+          <p>Press Left Arrow to Move Coin Left</p>
+          <p>Press Right Arrow to Move Coin Right</p>
+          
+        </div>
+      </td>
+    </tr>
   </table>
 
   <script type="module" src="./src/game.js"></script>
