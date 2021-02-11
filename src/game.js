@@ -5,7 +5,7 @@ import { Coin } from './Coin.js';
 import { CoinTray } from './CoinTray.js';
 import { Slot } from './Slot.js';
 // import { playVictoryTone, playErrorTone } from './Sounds.js';
-var squareSize = 52.857142857142854;
+// var squareSize = 52.857142857142854;
 let canvas=document.getElementById("gameScreen");
 let ctx=canvas.getContext("2d");
 

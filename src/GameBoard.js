@@ -15,9 +15,6 @@ export class GameBoard {
         this.slotCounters = new Array(this.MAX_COLS);
         this.columns = new Array(this.MAX_COLS);
 
-
-
-
         for(var i= 0; i<this.slotCounters.length; i++){
             this.slotCounters[i] = this.MAX_ROWS;
         }
@@ -178,11 +175,12 @@ export class GameBoard {
         else {
 
             let column = this.columns[col];
+            var row;
 
             var slotFound = false;
             const backgroundColor = gameColors.gameBackgroundColor;
 
-            for(var row=this.MAX_ROWS-1; row>=0 &&  !slotFound; row--){
+            for(row=this.MAX_ROWS-1; row>=0 &&  !slotFound; row--){
 
                 let slot=column[row];
 
@@ -198,8 +196,16 @@ export class GameBoard {
 
             return (slotFound);
 
+            if(this.detectWinner(col,row)){
+
+
+            }
+            else{}
+    
+
         }
 
+        
 
 
 
@@ -228,6 +234,14 @@ export class GameBoard {
 
             lineY += this.distBetweenRows;
         }
+    }
+
+    detectWinner(row){
+
+        console.log("row = " + row);
+
+
+
     }
 
 
