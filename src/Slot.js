@@ -1,3 +1,4 @@
+import { gameColors } from './Globals.js';
 export class Slot{
 
   constructor(top,left,size,bgColor){
@@ -35,7 +36,8 @@ export class Slot{
 
   draw(ctx){
 
-    ctx.strokeStyle = '#FFFFFF';
+    ctx.strokeStyle = gameColors.gridColor;
+    ctx.lineWidth="5";
     ctx.strokeRect(this.left,this.top,this.size,this.size);
 
     // console.log(this);

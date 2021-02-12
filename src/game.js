@@ -17,11 +17,9 @@ const gameRightMarginPct = gameLeftMarginPct;
 const gameBottomMarginPct = 15;
 var gameTopMarginPx, gameBottomMarginPx, gameLeftMarginPx, gameRightMarginPx, gameBoardWidth, gameBoardHeight;
 
-var playerCoin;
+var playerCoin , playerCoinCol;
 let firstColor = gameColors.player1Color;
-var previousColor, color;
-
-var playerCoinCol;
+var previousColor , color;
 
 const ARROW_RIGHT = "ArrowRight";
 const ARROW_LEFT = "ArrowLeft";
@@ -135,7 +133,6 @@ function setupEventHandlers() {
 main(); // call the main functionality
 // var tray1InitLength = tray1.coins.length;
 // var tray2InitLength = tray2.coins.length;
-
 function main() {
 
     setupEventHandlers();
@@ -166,6 +163,7 @@ function main() {
 
 
 }
+
 // var x = 6.5;
 // var y = 2.5;
 function createNewPlayerCoin() {
@@ -258,6 +256,14 @@ function closepopUpBox(){
     popUpBox.style.display = "none";
     enableMoving();
 }
+function showWinnerPopUpBox(message){
+    disableMoving();
+    playVictoryTone();
+    winnerPopUpBox = document.getElementById("winnerPopUpBox");
+    winnerPopUpBoxMessage = document.getElementById("winnerPopUpBoxMessage");
+    winnerPopUpBoxMessage.innerHTML=message;
+    winnerPopUpBox.style.display = "block";    
+}
 
 function enableMoving(){
     enableArrows();
@@ -268,27 +274,71 @@ function disableMoving(){
     disableArrows();
 }
 
-function enableKeys(){
-    isKeyDisabled = false;
-}
 function disableKeys(){
     isKeyDisabled = true;
-}
-
-function enableArrow(arrow) {
-    arrow.disabled = false;
 }
 function disableArrow(arrow) {
     playErrorTone();
     arrow.disabled = true;
 }
+function disableArrows(){
+    rightArrow.disabled = "true";
+    leftArrow.disabled = "true";
+    playArrow.disabled = "true";
+}
 
+function enableKeys(){
+    isKeyDisabled = false;
+}
+function enableArrow(arrow) {
+    arrow.disabled = false;
+}
 function enableArrows(){
     enableArrow(leftArrow);
     enableArrow(rightArrow);
     enableArrow(playArrow);
 }
 
+function leftArrowClicked(){
+      leftClicked();
+}
+function leftClicked(){
+
+    if(playerCoinCol == 1){
+        disableArrow(leftArrow);
+
+        showpopUpBox(messages.tooFarLeft + messages.deafult);
+    }
+    else{
+        enableArrows();
+        playCoinMovingSound();
+        playerCoin.moveLeft(ctx,gameBoard.sqSize,gameColors.gameBackgroundColor);
+        playerCoinCol -= 1;
+    }
+
+}
+
+function rightArrowClicked(){
+    rightClicked();
+}
+function rightClicked(){
+
+    if(playerCoinCol == 7){
+        disableArrow(rightArrow);
+        showpopUpBox(messages.tooFarRight + messages.deafult);
+    }
+    else{
+        playCoinMovingSound();
+        enableArrows();
+        playerCoin.moveRight(ctx,gameBoard.sqSize,gameColors.gameBackgroundColor);
+        playerCoinCol += 1;
+    }
+
+}
+
+function playArrowClicked(){
+    playClicked();
+}
 function playClicked(){
 
     if (gameBoard.drop(playerCoin, ctx, playerCoinCol)) {
@@ -329,122 +379,3 @@ function playClicked(){
         // showYouWonMessage();
     }
 }
-
-function rightClicked(){
-
-    if(playerCoinCol == 7){
-        disableArrow(rightArrow);
-        showpopUpBox(messages.tooFarRight + messages.deafult);
-    }
-    else{
-        playCoinMovingSound();
-        enableArrows();
-        playerCoin.moveRight(ctx,gameBoard.sqSize,gameColors.gameBackgroundColor);
-        playerCoinCol += 1;
-    }
-
-}
-
-function leftClicked(){
-
-    if(playerCoinCol == 1){
-        disableButton(leftArrow);
-
-        showpopUpBox(messages.tooFarLeft + messages.deafult);
-    }
-    else{
-        enableArrows();
-        playCoinMovingSound();
-        playerCoin.moveLeft(ctx,gameBoard.sqSize,gameColors.gameBackgroundColor);
-        playerCoinCol -= 1;
-    }
-
-}
-
- // doing nothing for now
-//  function sound(src) {
-
-//     this.sound = document.createElement("audio");
-  
-//     this.sound.src = src;
-  
-//     this.sound.setAttribute("preload", "auto");
-  
-//     this.sound.setAttribute("controls", "none");
-  
-//     this.sound.style.display = "none";
-  
-//     document.body.appendChild(this.sound);
-  
-//     this.play = function(){
-  
-//         this.sound.play();
-  
-//     }
-  
-//     this.stop = function(){
-  
-//         this.sound.pause();
-  
-//     }    
-  
-//   }
-  
-//   var errorSound = new sound("errorSound.mp3");
-//   var victorySound = new sound("victorySound.mp3")
-  
-//   function playErrorTone() {
-//     errorSound.play();
-//   }
-  
-//   function playVictoryTone(){
-//     victorySound.play();
-//   }
-
-  function leftArrowClicked(){
-      leftClicked();
-  }
-  
-  function rightArrowClicked(){
-    rightClicked();
-}
-function playArrowClicked(){
-    playClicked();
-}
-
-function disableArrows(){
-
-
-    rightArrow.disabled = "true";
-    leftArrow.disabled = "true";
-    playArrow.disabled = "true";
-}
-
-
-
-
-
-
-
-
-
-
-
-
-function showWinnerPopUpBox(message){
-    disableMoving();
-    playVictoryTone();
-    winnerPopUpBox = document.getElementById("winnerPopUpBox");
-    winnerPopUpBoxMessage = document.getElementById("winnerPopUpBoxMessage");
-    winnerPopUpBoxMessage.innerHTML=message;
-    winnerPopUpBox.style.display = "block";    
-}
-
-
-
-
-
-
-
-
-
