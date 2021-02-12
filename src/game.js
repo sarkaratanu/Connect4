@@ -5,7 +5,7 @@ import { Coin } from './Coin.js';
 import { CoinTray } from './CoinTray.js';
 import { Slot } from './Slot.js';
 import { playVictoryTone , playErrorTone , playDropSound } from './Sounds.js';
-// import { playVictoryTone, playErrorTone } from './Sounds.js';
+
 // var squareSize = 52.857142857142854;
 let canvas=document.getElementById("gameScreen");
 let ctx=canvas.getContext("2d");
@@ -21,14 +21,12 @@ var playerCoin;
 let firstColor = gameColors.player1Color;
 var previousColor, color;
 
-var leftBtn, rightBtn, shootBtn, playerCoinCol;
-// var closeWinnerBox;
-// var closeColsBox;  
-var youWonMessage,colErrorMessage;
+var playerCoinCol;
 
 const ARROW_RIGHT = "ArrowRight";
 const ARROW_LEFT = "ArrowLeft";
 const ARROW_DOWN = "ArrowDown";
+var leftArrow,rightArrow,playArrow;
 
 var tray1,tray2;
 var winnerPopUpBox,winnerPopUpBoxMessage;
@@ -37,41 +35,25 @@ var popUpBox,popUpBoxMessage;
 
 var isKeyDisabled = false;
 
-var winner;
-var Player1, Player2;
-
-
-// const page = {
-    // reload : "location.href=location.href",
-// }
-var leftArrow,rightArrow,shootButton;
-
-var reloadPageBox = document.getElementById("reloadPage");
-
 const messages = {
 
     deafult : " ----->>>>> Click " +  "'x'" + " to resume playing",
     colError : "Try another column, this one's already full",
-    // winner : " Congrats! " + winner + " has won!!!",
     tooFarLeft : "Can't go left anymore, there's no more space",
     tooFarRight : "Can't go right anymore, there's no more space",
-    player1HasWon : " Congrats! " + "Player 1" + " has won!!!",
-    player2HasWon : " Congrats! " + "Player 2" + " has won!!!",
+    player1HasWon : " Congrats! Player 1 has won!!!",
+    player2HasWon : " Congrats! Player 2 has won!!!",
 
 }
 
 //styling canvas with color and position
 function canvasStyling(){
 
-    // ctx.canvas.width  = window.innerWidth * 0.75;
-    // ctx.canvas.height = window.innerHeight * 0.85;
+    // ctx.canvas.width  = window.innerWidth * 0.73;
+    // ctx.canvas.height = window.innerHeight * 0.8025;
 
     canvas.style.background = '#000000';
 
-}
-
-function msg(txt) {
-    console.log(txt);
 }
 
 function gameBoardResizing() {
@@ -107,15 +89,6 @@ function gameBoardResizing() {
 
 }
 
-function setupTextBoxes() {
-    //input textboxes
-    // Player1 = document.getElementById("player1Name");
-    // Player1.value = "Enter Player 1 Name";
-    
-    // Player2 = document.getElementById("player2Name");
-    // Player2.value="Enter Player 2 Name";
-}
-
 function coinTrays(){
     var coinTrayWidth = (gameBoardWidth/2) - 50;
     // let tray1 = new CoinTray(300,100,600,300,gameColors.player1Color, 3,7);
@@ -141,42 +114,17 @@ function coinTrays(){
 
 function setupEventHandlers() {
 
-    // leftBtn = document.getElementById("leftBtn");
-    // rightBtn = document.getElementById("rightBtn");
-    // shootBtn = document.getElementById("shootBtn");
-    // span = document.getElementById("myModal").getElementById("modalContent").getElementById("spanButton");
-
-
-    // youWonMessage = document.getElementsByClassName("closeYouWonMessage")[0];
-    // colErrorMessage = document.getElementsByClassName("closeColErrorMessage")[0];
-
-    // leftArrow = 
     leftArrow = document.getElementById("leftArrow");
     leftArrow.addEventListener("click",leftArrowClicked);
 
     rightArrow = document.getElementById("rightArrow");
     rightArrow.addEventListener("click",rightArrowClicked);
 
-    shootButton = document.getElementById("shootButton");
-    shootButton.addEventListener("click",shootButtonClicked);
-
-    // leftBtn.addEventListener("click", leftBtnClicked);
-    // rightBtn.addEventListener("click", rightBtnClicked);
-    // shootBtn.addEventListener("click", shootBtnClicked);
-    // colErrorMessage.addEventListener("click", closeColErrorMessage);
-    // youWonMessage.addEventListener("click", closeYouWonMessage);
+    playArrow = document.getElementById("playArrow");
+    playArrow.addEventListener("click",playArrowClicked);
 
     popUpBox = document.getElementsByClassName("closepopUpBox")[0];
     popUpBox.addEventListener("click", closepopUpBox);
-
-    // winnerPopUpBoxMessage = document.getElementsByClassName("closepopUpBox")[0];
-
-    // reloadPageBox = document.getElementsByClassName("reloadPageBox")[0];
-    // reloadPageBox.addEventListener("click",page.reload);
-
-    // reloadP = document.getElementsByClassName("closepopUpBox")[0];
-    // popUpBox.addEventListener("click", closepopUpBox);
-
 
 }
 
@@ -193,8 +141,6 @@ function main() {
     setupEventHandlers();
 
     canvasStyling(); // sets the canvas color
-
-    setupTextBoxes();
 
     gameBoardResizing(); // this calculates the various margins and block sizes
 
@@ -220,8 +166,8 @@ function main() {
 
 
 }
-var x = 6.5;
-var y = 2.5;
+// var x = 6.5;
+// var y = 2.5;
 function createNewPlayerCoin() {
 
     // msg(tray1InitLength);
@@ -251,14 +197,14 @@ function createNewPlayerCoin() {
         // ctx.closePath();
         // ctx.fill();
         // tray1.coins.pop();
-        // msg("New Tray 1 length is " + tray1.coins.length);
+        // console.log("New Tray 1 length is " + tray1.coins.length);
         // x--;
     }
 
     else{
         color = gameColors.player1Color;
         tray2.coins.pop();
-        msg("New Tray 2 length is " + tray2.coins.length);
+        console.log("New Tray 2 length is " + tray2.coins.length);
     }
 
 
@@ -274,7 +220,6 @@ function createNewPlayerCoin() {
 
 }
 
-
 //helps figure out which key has been pressed
 document.addEventListener("keydown",function(event) {
     onkeypressed(event);
@@ -287,15 +232,15 @@ function onkeypressed(event) {
         switch (event.key) {
 
             case ARROW_LEFT:
-                leftBtnClicked();
+                leftClicked();
                 break;
     
             case ARROW_RIGHT:
-                rightBtnClicked();
+                rightClicked();
                 break;
     
             case ARROW_DOWN:
-                shootBtnClicked();
+                playClicked();
     
         }
     }
@@ -359,7 +304,7 @@ function enableMoving(){
 
 function disableMoving(){
     disableKeys();
-    disableButtons();
+    disableAll();
 }
 
 function enableKeys(){
@@ -380,20 +325,19 @@ function disableButton(btn) {
 }
 
 function enableButtons(){
-    // enableButton(leftBtn);
     enableButton(leftArrow);
-    // enableButton(rightBtn);
     enableButton(rightArrow);
+    enableButton(playArrow);
 }
 
-function disableButtons(){
-    // disableButton(leftBtn);
-    disableButton(leftArrow);
-    // disableButton(rightBtn);
-    disableButton(rightArrow);
-}
+// function disableButtons(){
+//     // disableButton(leftBtn);
+//     disableButton(leftArrow);
+//     // disableButton(rightBtn);
+//     disableButton(rightArrow);
+// }
 
-function shootBtnClicked(){
+function playClicked(){
 
     if (gameBoard.drop(playerCoin, ctx, playerCoinCol)) {
         enableButtons();
@@ -402,8 +346,8 @@ function shootBtnClicked(){
         // }
         if(gameBoard.checkIfWinnerFound()){
             // showWinner();
-            disableButtons();
-            disable();
+            // disableButtons();
+            disableAll();
 
             if (color == gameColors.player1Color){
                 showWinnerPopUpBox(messages.player1HasWon);
@@ -435,7 +379,7 @@ function shootBtnClicked(){
     }
 }
 
-function rightBtnClicked(){
+function rightClicked(){
 
     if(playerCoinCol == 7){
         // disableButton(rightBtn);
@@ -450,7 +394,7 @@ function rightBtnClicked(){
 
 }
 
-function leftBtnClicked(){
+function leftClicked(){
 
     if(playerCoinCol == 1){
         // disableButton(leftBtn);
@@ -507,26 +451,22 @@ function leftBtnClicked(){
 //   }
 
   function leftArrowClicked(){
-      console.log("Testing img function");
-      leftBtnClicked();
+      leftClicked();
   }
   
   function rightArrowClicked(){
-    console.log("Testing img function");
-    rightBtnClicked();
+    rightClicked();
 }
-function shootButtonClicked(){
-    shootBtnClicked();
-}
-
-function showWinner(){
-    showpopUpBox(messages.winner);
+function playArrowClicked(){
+    playClicked();
 }
 
-function disable(){
+function disableAll(){
+
+
     rightArrow.disabled = "true";
     leftArrow.disabled = "true";
-    shootButton.disabled = "true";
+    playArrow.disabled = "true";
 }
 
 
