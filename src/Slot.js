@@ -2,6 +2,7 @@ export class Slot{
 
   constructor(top,left,size,bgColor){
 
+    
     this.top = top;
     this.left = left;
     this.size = size;
@@ -28,6 +29,20 @@ export class Slot{
 
   // }
 
+
+  createInStyle(ctx) {
+
+    let originalWidth = ctx.lineWidth;
+    let margin = 0.1 * this.size;
+
+    ctx.strokeStyle = '#7F7F7F';
+    ctx.lineWidth = 10;
+    ctx.strokeRect(this.left + margin, this.top + margin, this.size - 2*margin, this.size - 2*margin);
+
+    ctx.lineWidth = originalWidth;
+  }
+
+
   drawFunky(ctx) {
     ctx.strokeStyle = '#0F4411';
     ctx.strokeRect(this.left,this.top,this.size,this.size);
@@ -38,6 +53,7 @@ export class Slot{
     ctx.strokeStyle = '#FFFFFF';
     ctx.strokeRect(this.left,this.top,this.size,this.size);
 
+    this.createInStyle(ctx); // line added to make the slot beautiful
     // console.log(this);
 
 
