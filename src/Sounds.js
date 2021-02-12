@@ -30,6 +30,7 @@ function sound(src) {
 var errorSound = new sound("errorSound.mp3");
 var victorySound = new sound("victorySound.mp3");
 var dropSound = new sound("dropSound.mp3");
+var coinMovingSound = new sound("coinMovingSound.mp3");
 
 export function playErrorTone() {
   errorSound.play();
@@ -41,4 +42,8 @@ export function playVictoryTone(){
 
 export function playDropSound(){
   dropSound.play();
+}
+
+export function playCoinMovingSound(){
+  coinMovingSound.play();
 }

@@ -4,7 +4,7 @@ import { colors , gameColors } from './Globals.js';
 import { Coin } from './Coin.js';
 import { CoinTray } from './CoinTray.js';
 import { Slot } from './Slot.js';
-import { playVictoryTone , playErrorTone , playDropSound } from './Sounds.js';
+import { playVictoryTone , playErrorTone , playDropSound , playCoinMovingSound } from './Sounds.js';
 
 // var squareSize = 52.857142857142854;
 let canvas=document.getElementById("gameScreen");
@@ -225,7 +225,6 @@ document.addEventListener("keydown",function(event) {
     onkeypressed(event);
 })
 
-
 function onkeypressed(event) {
 
     if(!(isKeyDisabled)){
@@ -247,42 +246,6 @@ function onkeypressed(event) {
     
 }
 
-// function showYouWonMessage(){
-
-//     // winnerSound.play();
-//     playWinnerTone();
-//     youWonMessage = document.getElementById("youWonMessage");
-//     youWonMessage.style.display = "block";    
-// }
-
-// function hideYouWonMessage() {
-//     youWonMessage = document.getElementById("youWonMessage");
-//     youWonMessage.style.display = "none";
-
-// }
-
-// function closeYouWonMessage() {
-//     hideYouWonMessage();
-// }
-
-// function showColErrorMesage(){
-//     playErrorTone();
-//     colErrorMessage = document.getElementById("colErrorMessage");
-//     colErrorMessageLine = document.getElementById("colErrorMessageLine");
-//     colErrorMessageLine.innerHTML="We are testing";
-//     colErrorMessage.style.display = "block";    
-// }
-
-// function hideColErrorMessage() {
-//     colErrorMessage = document.getElementById("colErrorMessage");
-//     colErrorMessage.style.display = "none";
-//     // createNewPlayerCoin();
-// }
-
-// function closeColErrorMessage() {
-//     hideColErrorMessage();
-// }
-
 function showpopUpBox(message){
     disableMoving();
     popUpBox = document.getElementById("popUpBox");
@@ -290,7 +253,6 @@ function showpopUpBox(message){
     popUpBoxMessage.innerHTML=message;
     popUpBox.style.display = "block";    
 }
-
 function closepopUpBox(){
     popUpBox = document.getElementById("popUpBox");
     popUpBox.style.display = "none";
@@ -298,56 +260,45 @@ function closepopUpBox(){
 }
 
 function enableMoving(){
-    enableButtons();
+    enableArrows();
     enableKeys();
 }
-
 function disableMoving(){
     disableKeys();
-    disableAll();
+    disableArrows();
 }
 
 function enableKeys(){
     isKeyDisabled = false;
 }
-
 function disableKeys(){
     isKeyDisabled = true;
 }
 
-function enableButton(btn) {
-    btn.disabled = false;
+function enableArrow(arrow) {
+    arrow.disabled = false;
 }
-
-function disableButton(btn) {
+function disableArrow(arrow) {
     playErrorTone();
-    btn.disabled = true;
+    arrow.disabled = true;
 }
 
-function enableButtons(){
-    enableButton(leftArrow);
-    enableButton(rightArrow);
-    enableButton(playArrow);
+function enableArrows(){
+    enableArrow(leftArrow);
+    enableArrow(rightArrow);
+    enableArrow(playArrow);
 }
-
-// function disableButtons(){
-//     // disableButton(leftBtn);
-//     disableButton(leftArrow);
-//     // disableButton(rightBtn);
-//     disableButton(rightArrow);
-// }
 
 function playClicked(){
 
     if (gameBoard.drop(playerCoin, ctx, playerCoinCol)) {
-        enableButtons();
+        enableArrows();
         // if(gameBoard.detectWinner()){
         //     showWinner();
         // }
         if(gameBoard.checkIfWinnerFound()){
-            // showWinner();
-            // disableButtons();
-            disableAll();
+    
+            disableArrows();
 
             if (color == gameColors.player1Color){
                 showWinnerPopUpBox(messages.player1HasWon);
@@ -382,12 +333,12 @@ function playClicked(){
 function rightClicked(){
 
     if(playerCoinCol == 7){
-        // disableButton(rightBtn);
-        disableButton(rightArrow);
+        disableArrow(rightArrow);
         showpopUpBox(messages.tooFarRight + messages.deafult);
     }
     else{
-        enableButtons();
+        playCoinMovingSound();
+        enableArrows();
         playerCoin.moveRight(ctx,gameBoard.sqSize,gameColors.gameBackgroundColor);
         playerCoinCol += 1;
     }
@@ -397,13 +348,13 @@ function rightClicked(){
 function leftClicked(){
 
     if(playerCoinCol == 1){
-        // disableButton(leftBtn);
         disableButton(leftArrow);
 
         showpopUpBox(messages.tooFarLeft + messages.deafult);
     }
     else{
-        enableButtons();
+        enableArrows();
+        playCoinMovingSound();
         playerCoin.moveLeft(ctx,gameBoard.sqSize,gameColors.gameBackgroundColor);
         playerCoinCol -= 1;
     }
@@ -461,7 +412,7 @@ function playArrowClicked(){
     playClicked();
 }
 
-function disableAll(){
+function disableArrows(){
 
 
     rightArrow.disabled = "true";

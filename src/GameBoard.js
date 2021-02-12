@@ -1,7 +1,7 @@
 import { colors , gameColors } from './Globals.js';
 import { Coin } from './Coin.js';
 import { Slot } from './Slot.js';
-import { playVictoryTone , playErrorTone , playDropSound } from './Sounds.js';
+import { playVictoryTone , playErrorTone , playDropSound , playCoinMovingSound } from './Sounds.js';
 export class GameBoard {
 
     constructor(ctx) {
