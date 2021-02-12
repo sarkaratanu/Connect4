@@ -400,24 +400,23 @@ function shootBtnClicked(){
         // if(gameBoard.detectWinner()){
         //     showWinner();
         // }
-        if(gameBoard.matchFound){
+        if(gameBoard.checkIfWinnerFound()){
             // showWinner();
-            if(gameBoard.playerColor == gameColors.player1Color){
-                disableButtons();
-                // showpopUpBox(messages.player1HasWon);
+            disableButtons();
+            disable();
+
+            if (color == gameColors.player1Color){
                 showWinnerPopUpBox(messages.player1HasWon);
             }
             else{
-                // disableButtons();
-                // disableButton(leftBtn);
-                // disableButton(rightBtn);
-                disable();
-                // showpopUpBox(messages.player2HasWon);
                 showWinnerPopUpBox(messages.player2HasWon);
             }
             
         }
-        createNewPlayerCoin();
+        else {
+            createNewPlayerCoin();
+        }
+        
         // showColErrorMesage();
         // showYouWonMessage();
         // var player = "Abhinn";
